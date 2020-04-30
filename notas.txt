@@ -1,0 +1,47 @@
+proprietario
+    ok  tudo
+    ok  login
+    ok  cadastro
+    ok  edicao json
+    nf  edicao senha
+    nf  edicao foto
+    nf  enviar email recuperar senha
+    nf  api recuperar senha
+    ok  visualizar perfil
+    nf    enviar imovel para analise da agencia
+imovel
+    ok  tudo
+    ok  cadastro
+    ok  visualizacao via agencia (modificada)
+    nf  enviar email cadastro realizado
+    ok  edicao json
+    nf  edicao foto
+    nf  cadastrar agendamento de visita
+    nf  editar agendamento de visita
+    nf  cancelar agendamento de visita
+    nf  confirmar final de visita
+agencia
+    ok  tudo
+    ok  login
+    ok  cadastro
+    ok  edicao json
+    nf  edicao senha
+    nf  edicao foto
+    nf  enviar email recuperar senha
+    nf  api recuperar senha
+    ok  visualizar perfil
+favoritos
+    ok  tudo
+    ok  verificar
+    ok  acao adicionar/remover
+    ok  agencia
+propostas
+    ---
+visualizacao
+    ok  total
+    ok  marcar visualizacao
+    ok  verificar
+    ok  excluir visualizacao da agencia em um imovel
+    ok  excluir visualizacoes gerais de um imovel
+    ok  excluir visualizacoes de uma agencia
+        

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+html(lang="br")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        title Proprimóvel
+        link(href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet")
+
+        style.
+            html, body {
+                background-color: white;
+                margin: 0;
+                padding: 0;
+                font-family: "Manrope", sans-serif;
+            }
+
+            header {
+                grid-area: "header";
+                display: grid;
+                height: 6em;
+                width: 100vw;
+                background-color: white;
+                grid-template-areas: "logo";
+                grid-template-columns: 100%;
+            }
+
+            .alinhamento {
+                margin-left: 4vw;
+                margin-right: 4vw;
+            }
+
+    body
+        header
+            .alinhamento
+                img(src="/midia/Assets_logo.png")
+
+        
+        #divisaologinareas
+            #proprietario
+                .texto Sou
+                    br
+                    | PRORPIETÁRIO
+                .botao
+                    a(href="/proprietario/login") Entrar
+            #agencia
+                .texto Sou
+                    br
+                    | IMOBILIÁRIA
+                .botao
+                    a(href="/agencia/login") Entrar
+        #funcionamento
+            #titulocentro COMO O APP PROPRIMÓVEL FUNCIONA?
+            .alinhamento
+                #esquerda 
+                    #imagem
+                        img(src="/midia/Assets_como_funciona_01.png")
+                    #texto O usuário entra no app PROPRIMÓVEL e faz o cadastro.
+                        br
+                        | A partir desse momento já é possível cadastrar um novo imóvel.
+
+                #direita 
+                    #imagem
+                        img(src="/midia/Assets_como_funciona_02.png")
+                    #texto O usuário irá expecificar todas as informações relacionadas ao imóvel como:
+                        br
+                        | Preço, metros quadrados, valor de IPTU, taxa de condomínio etc. Ele pode selecionar as imobiliárias ou enviar para todas as imobiliárias cadastradas.
+                        br
+                        | Também pode expecificar onde se encontra a chave do imóvel, as datas e horários disponíveis.
+
+                #esquerda 
+                    #imagem
+                        img(src="/midia/Assets_como_funciona_03.png")
+                    #texto Todas essas infirmações são enviadas para as imobiliárias selecionadas pelo usuário.
+
+                #direita 
+                    #imagem
+                        img(src="/midia/Assets_como_funciona_04.png")
+                    #texto As imobiliárias terão acesso através do site às informações enviadas pelo usuário.
+                        br
+                        | As imobiliárias cadastradas contam também com:
+                        br
+                        | - Um chat direto com o anunciante;
+                        br
+                        | - Campo para enviar propostas;
+                        br
+                        | - Opção de retirada de chave e agendamento de visitas.
+
+                #especial
+                    #imagem
+                        img(src="/midia/Assets_baixe_o_app.png")
+                    #texto
+                        | Usando o aplicativo PROPRIMOVEL você pode fazer um cadastro único do seu imóvel e enviar para quantas imobiliárias desejar, além de poder atualizar o status e alterar informações em tempo real, todas as atualizações são enviadas automaticamente para as imobiliárias cadastradas. Você receberá propostas e agendamentos de visitas diretamente pelo aplicativo tornando o ambiente de negociação mais seguro.
+                    #baixar
+                        #links
+                            a(href="https://www.play.google.com/store")
+                                img(src="/midia/Assets_download_01.png")
+                            a(href="https://www.apple.com/ios/app-store/")
+                                img(src="/midia/Assets_download_02.png")
