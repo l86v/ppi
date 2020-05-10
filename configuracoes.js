@@ -1,4 +1,11 @@
 // https://igorescobar.github.io/jQuery-Mask-Plugin/
+
+
+// https://www.pontofrio.com.br/Informatica/Computadores/pc-gamer-roda-tudo-amd-a6-38ghz-placa-de-video-radeon-r5-2gb-hd-500gb-8gb-1500726926.html?IdSku=1500726926 sonho...
+// https://www.pontofrio.com.br/Games/Playstation4/AcessoriosPlaystation4/Cambio-Logitech-Driving-Force-Shifter-para-Volantes-G29-e-G920-6695309.html?IdSku=6695309 com isso...
+// https://www.americanas.com.br/produto/124527664/volante-logitech-gamer-g29-ps4-ps3-e-pc?pfm_carac=g29&pfm_page=search&pfm_pos=grid&pfm_type=search_page e pra finalizar... esse.
+
+
 let random = require("randomatic")
 let moment = require("moment")
 var path = require("path")
@@ -38,6 +45,30 @@ module.exports.email = {
     css: `body,html{background-color:#fff;border:0;margin:0;padding:0;font-family:"Work Sans",sans-serif}.container{min-height:40vh;position:relative;display:grid;height:100vh;z-index:99}.margem{margin:4vh}.identificadorpedido{color:#28267c;font-size:1.75em;font-weight:600}.mensagemprincipal{color:#3d3e80;font-weight:300;font-size:1.25em}.produtos{display:grid;grid-template-columns:repeat(1,1fr);grid-gap:1vw}.produtos .produto{display:grid;grid-template-areas:"foto" "informacoes";grid-template-rows:repeat(2,1fr);box-shadow:0 0 .5rem .0085rem #e6e6e6}.produtos .produto .foto{display:grid;height:100%;overflow:hidden;opacity:1}.produtos .produto .foto img{height:90%;margin:auto}.produtos .produto .informacoes{padding:2vh}.produtos .produto .informacoes .tipo{text-transform:uppercase;color:#26274f;font-weight:300;font-size:.75em}.produtos .produto .informacoes .valor{font-weight:400;font-size:1em;color:#3d3e80}.entrega,.mensagemtexto{font-weight:400;font-size:1em;color:#3d3e80}.area{font-weight:600;font-size:1.25em;margin-top:1vh;margin-bottom:.5vh;color:#28267c}#verde{color:#3b804c}`
 }
 
+module.exports.padroes = {
+    pasta: "uploads",
+    imovel: {
+        tipos: [
+            { "codigo": "cvp", "mensagem": "Casa em via pública" },
+            { "codigo": "apt", "mensagem": "Apartamento" },
+            { "codigo": "lft", "mensagem": "Loft" },
+            { "codigo": "chc", "mensagem": "Chácara" },
+            { "codigo": "sto", "mensagem": "Sítio" },
+            { "codigo": "fzd", "mensagem": "Fazenda" },
+            { "codigo": "csp", "mensagem": "Casa de praia" },
+            { "codigo": "csc", "mensagem": "Casa em condomínio" },
+            { "codigo": "bgl", "mensagem": "Bangalô" },
+            { "codigo": "trn", "mensagem": "Terreno" },
+            { "codigo": "rrl", "mensagem": "Rural" }].sort((a, b) => (a.mensagem > b.mensagem) ? 1 : -1),
+        intencoes: [
+            { "codigo": "ven", "mensagem": "Venda" },
+            { "codigo": "tro", "mensagem": "Troca" },
+            { "codigo": "loc", "mensagem": "Aluguel" },
+            { "codigo": "tem", "mensagem": "Temporada" }].sort((a, b) => (a.mensagem > b.mensagem) ? 1 : -1)
+    }
+
+}
+
 module.exports.mensagens = (codigo) => {
     switch (codigo) {
         // erros
@@ -57,14 +88,14 @@ module.exports.mensagens = (codigo) => {
         case "Lo1": mensagem = "Login realizado com sucesso. Olá! 🤙"; break;
         case "Lo2": mensagem = "Logout realizado com sucesso. Até mais! 👋"; break;
         case "Lo3": mensagem = "Por gentileza, faça o login novamente."; break;
-        case "Lo4": mensagem = "A senha inserida está incorreta."; break;
+        case "Lo4": mensagem = "A senha inserida está incorreta. 🔐"; break;
 
         // cadastro
         case "Ca0": mensagem = "O cadastro não pôde ser realizado."; break;
         case "Ca1": mensagem = "Seu cadastro acaba de ser realizado. Seja bem-vindo(a)!"; break;
         case "Ca2": mensagem = "O e-mail inserido já está sendo utilizado no momento."; break;
         case "Ca3": mensagem = "O CPF inserido já está sendo utilizado no momento."; break;
-        case "Ca4": mensagem = "O imóvel foi cadastrado com sucesso!"; break;
+        case "Ca4": mensagem = "O imóvel foi cadastrado com sucesso! 👌"; break;
         case "Ca5": mensagem = "Não foi possível cadastrar a solicitação de análise."; break;
         case "Ca6": mensagem = "A solicitação de análise foi cadastrada com sucesso."; break;
         case "Ca7": mensagem = "A solicitação de análise não pôde ser cadastrada."; break;
@@ -73,7 +104,18 @@ module.exports.mensagens = (codigo) => {
 
         // edição
         case "Ed0": mensagem = "Não foi possível editar as informações."; break;
-        case "Ed1": mensagem = "A edição foi realizada com sucesso."; break;
+        case "Ed1": mensagem = "A edição foi realizada com sucesso. 😉"; break;
+
+        // recuperação de acesso
+        case "Re0": mensagem = "Não foi possível encontrar uma conta com esse e-mail."; break;
+        case "Re1": mensagem = "Um link foi enviado para o e-mail indicado com o link para a redefinição de senha."; break;
+        case "Re2": mensagem = "Esse link para recuperação de senha não é válido, está expirado ou não existe."; break;
+        case "Re3": mensagem = "Sua senha foi redefinida com sucesso."; break;
+        case "Re4": mensagem = "Link válido."; break;
+        case "Re5": mensagem = "Sua senha não pôde ser redefinida."; break;
+
+        case "Ag0": mensagem = "Não foi possível agendar a visita."; break;
+        case "Ag1": mensagem = "A visita foi agendada com sucesso."; break;
 
         // sem mensagem
         default: mensagem = "Ops. Um erro desconhecido ocorreu."; break;
@@ -120,28 +162,8 @@ module.exports.verificartoken = (token) => {
     return (this.aplicativo.token === token) ? true : false
 }
 
-module.exports.padroes = {
-    pasta: "uploads",
-    imovel: {
-        tipos: [
-            { "codigo": "cvp", "mensagem": "Casa em via pública" },
-            { "codigo": "apt", "mensagem": "Apartamento" },
-            { "codigo": "lft", "mensagem": "Loft" },
-            { "codigo": "chc", "mensagem": "Chácara" },
-            { "codigo": "sto", "mensagem": "Sítio" },
-            { "codigo": "fzd", "mensagem": "Fazenda" },
-            { "codigo": "csp", "mensagem": "Casa de praia" },
-            { "codigo": "csc", "mensagem": "Casa em condomínio" },
-            { "codigo": "bgl", "mensagem": "Bangalô" },
-            { "codigo": "trn", "mensagem": "Terreno" },
-            { "codigo": "rrl", "mensagem": "Rural" }].sort((a, b) => (a.mensagem > b.mensagem) ? 1 : -1),
-        intencoes: [
-            { "codigo": "ven", "mensagem": "Venda" },
-            { "codigo": "tro", "mensagem": "Troca" },
-            { "codigo": "loc", "mensagem": "Aluguel" },
-            { "codigo": "tem", "mensagem": "Temporada" }].sort((a, b) => (a.mensagem > b.mensagem) ? 1 : -1)
-    }
-
+module.exports.gerarlinkrecuperacaosenha = () => {
+    return `${random("A0a", 9)}-${random("A0", 2)}`
 }
 
 module.exports.agora = (formato) => {
