@@ -19,6 +19,7 @@ module.exports.servidor = {
     endereco: "http://localhost",
     ano: moment().format("YYYY"),
     sitegisul: "http://brgisul.herokuapp.com",
+    arquivos: "http://ppi.gisulcompany.com",
     emailgisul: "contato@gisulcompany.com",
     segredo: `~AX,,IU,X-D1W,&C0B$X[&5Z]R8FG3_F,1%1%!Q6!9$RUJTK3S",L[#^(LZR{=FQE[2IVCS-}OP1F-9+1.$-6)RO1-0AA+]_NTTL=%K}]O][&+GI.9F53WB;Y{^N"I6LD^^B+)QPX3&GO,KILC@$^.L.(]S[Y86X;KV&MBC!8Y+#L5@1%=1OH)MMK358}J0EI8(O$NUA%$_[AR=#}V;Y&}XCBZ,W"M3=E{FG!9&R_U!&0!L@7)5B##T.DSY){E~@}8;CN@{BL[W&Y)GH&;AAG-F;CZI#7&]ZF#EB!YE70FY(1NOV+.X0XT$FDAYXCH~)FO_B-10!+NN7P,48XY00FY^!3MLVVV68TN_(G&)Z;7="=;WD8+U2{2HSL_R&HG];6!("AIZO4S+EAK~PP"`, // segredo do "express-session"
     token: `cacareco-hiperbolico-MBqA350ku-carrapato-biruta-0`,
@@ -95,16 +96,22 @@ module.exports.mensagens = (codigo) => {
         case "Ca1": mensagem = "Seu cadastro acaba de ser realizado. Seja bem-vindo(a)!"; break;
         case "Ca2": mensagem = "O e-mail inserido já está sendo utilizado no momento."; break;
         case "Ca3": mensagem = "O CPF inserido já está sendo utilizado no momento."; break;
-        case "Ca4": mensagem = "O imóvel foi cadastrado com sucesso! 👌"; break;
+        case "Ca4": mensagem = "O imóvel foi cadastrado com sucesso!"; break;
         case "Ca5": mensagem = "Não foi possível cadastrar a solicitação de análise."; break;
         case "Ca6": mensagem = "A solicitação de análise foi cadastrada com sucesso."; break;
         case "Ca7": mensagem = "A solicitação de análise não pôde ser cadastrada."; break;
         case "Ca8": mensagem = "É necessário selecionar ao menos uma imobiliária para a análise."; break;
-        case "Ca9": mensagem = "O cadastro da sua imobiliária foi realizado com sucesso! Faça login para começar! 🥳"; break;
+        case "Ca9": mensagem = "O cadastro da sua imobiliária foi realizado com sucesso! Faça login para começar."; break;
 
         // edição
         case "Ed0": mensagem = "Não foi possível editar as informações."; break;
-        case "Ed1": mensagem = "A edição foi realizada com sucesso. 😉"; break;
+        case "Ed1": mensagem = "A edição foi realizada com sucesso."; break;
+        case "Ed2": mensagem = "A foto de perfil foi alterada com sucesso."; break;
+        case "Ed3": mensagem = "As fotos do imóvel foram enviadas com sucesso."; break;
+        case "Ed4": mensagem = "A logo foi alterada com sucesso."; break;
+        case "Ed5": mensagem = "Não foi possível editar a foto de perfil."; break;
+        case "Ed6": mensagem = "Não foi possível editar as fotos do imóvel."; break;
+        case "Ed7": mensagem = "Não foi possível editar a logo."; break;
 
         // recuperação de acesso
         case "Re0": mensagem = "Não foi possível encontrar uma conta com esse e-mail."; break;
@@ -156,6 +163,10 @@ module.exports.imoveis = (codigo) => {
         default: mensagem = "Categoria inválida"; break;
     }
     return mensagem
+}
+
+module.exports.dormir = function (tempo) {
+    return new Promise((resolve) => setTimeout(resolve, tempo))
 }
 
 module.exports.verificartoken = (token) => {

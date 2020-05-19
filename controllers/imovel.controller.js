@@ -1,6 +1,11 @@
 let Imovel = require("../models/imovel.model")
 let configuracoes = require("../configuracoes")
 let request = require("request")
+let random = require("randomatic")
+let formidable = require("formidable")
+let sizeOf = require("image-size")
+let jimp = require("jimp")
+let fs = require("fs")
 
 module.exports.api_tudo = (req, res) => {
     let selecao = {
@@ -240,8 +245,133 @@ module.exports.api_edicao_json = (req, res) => {
     })
 }
 
-module.exports.api_visita_agendar = (req, res) => {
-    // vai ter que rodar um foreach pra nao dar encontro no mesmo
-    // imovel no mesmo dia e mesma hora, assim como no eoff,
-    // na presenca ou na entrada. nao me lembro bem agora.
+module.exports.api_edicao_fotos = (req, res) => {    
+    // para apagar, tem que ser foto por foto em uma api diferente.
+    // para reorganizar tem que ser uma api diferente.
+
+    var form = new formidable.IncomingForm()
+    let imovel = req.query.imovel
+
+    form.parse(req, function (erros, fields, files) {
+        if (erros) {
+            res.json({
+                erro: true,
+                acao: false,
+                mensagem: configuracoes.mensagens("Er0"),
+                valores: erros
+            })
+        }
+        else {
+            var final = 7
+            var arquivos_submetidos = []
+
+            for (var a = 0; a <= final; a++) {
+                var arquivo_atual = `foto_${String(a)}`
+                var decisao = (files[arquivo_atual] != undefined) ? (files[arquivo_atual]["path"] != undefined) ? arquivos_submetidos.push({ arquivo_transacao: arquivo_atual, arquivo_novonome: `${imovel}_${random("0", 3)}.${files[arquivo_atual]["name"].split(".").pop()}`, arquivo_dados: files[arquivo_atual], arquivo_enviado: false }) : null : null
+                console.log(decisao != null ? `decisão true!! (${arquivo_atual})` : `decisão false. (${arquivo_atual})`)
+            }
+
+            arquivos_submetidos.forEach((arquivo_candidato) => {
+                if (arquivo_candidato.arquivo_enviado === false) {
+                    console.log("oie.")
+                }
+                else {
+                    console.log("ja enviado.")
+                }
+                let limitealtura = 1080
+                let dimensoes = sizeOf(fs.createReadStream(arquivo_candidato["arquivo_dados"]["path"])["path"])
+
+                if ((Number(dimensoes["height"])) > (Number(limitealtura))) {
+                    console.log(`foto atual (${arquivo_candidato['arquivo_novonome']}) maior que ${limitealtura} de altura, base 64.`)
+
+                    jimp.read(fs.createReadStream(arquivo_candidato["arquivo_dados"]["path"])["path"], function (erros, arquivo) {
+                        if (erros) {
+                            console.log({ erros, local: 0, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                        }
+                        else {
+                            arquivofinal = arquivo_candidato["arquivo_novonome"]
+                            arquivo.resize(jimp.AUTO, limitealtura).quality(70).write(arquivofinal)
+                            configuracoes.dormir(25).then(() => {
+                                fs.readFile(arquivofinal, { encoding: "base64" }, function (erros, imagembase64) {
+                                    if (erros) {
+                                        console.log({ erros, local: 1, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                                    }
+                                    else {
+                                        configuracoes.dormir(25).then(() => {
+                                            request.post({ url: configuracoes.servidor.arquivos + "/enviar.64.php", form: { destino: configuracoes.padroes.pasta, imagem: imagembase64, nome: arquivofinal }, json: true }, function (erros, envio) {
+                                                if (erros) {
+                                                    console.log({ erros, local: 2, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                                                }
+                                                else {
+                                                    if (envio["body"]["envio"] != false) {
+                                                        configuracoes.dormir(25).then(() => {
+                                                            fs.unlink(arquivofinal, function (erros) {
+                                                                if (erros) {
+                                                                    console.log({ erros, local: 3, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                                                                }
+                                                                else {
+                                                                    arquivo_candidato.arquivo_enviado = true
+                                                                    var respostaenviofoto = { mensagem: "sucesso...", local: 0, arquivo: arquivo_candidato["arquivo_dados"]["name"] }
+                                                                    console.log(`envio 64...`, respostaenviofoto)
+                                                                }
+                                                            })
+                                                        })
+                                                    }
+                                                    else {
+                                                        console.log({ mensagem: "nao foi...", local: 0, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                                                    }
+                                                }
+                                            })
+                                        })
+                                    }
+                                })
+                            })
+                        }
+                    })
+                }
+                else {
+                    console.log(`foto ${arquivo_candidato['arquivo_novonome']} menor que ${limitealtura} de altura, plano.`)
+                    arquivofinal = arquivo_candidato["arquivo_novonome"]
+                    
+                    let upload = {
+                        pasta: configuracoes.padroes.pasta,
+                        nome: arquivofinal,
+                        caminho: arquivo_candidato["arquivo_dados"]["path"],
+                        arquivo: fs.createReadStream(arquivo_candidato["arquivo_dados"]["path"])
+                    }
+
+                    request.post({ url: `${configuracoes.servidor.arquivos}/enviar.PL.php`, json: true, formData: upload }, function (erros, enviofoto) {
+                        if (erros) {
+                            console.log({ erros, local: 4, arquivo: arquivo_candidato["arquivo_dados"]["name"] })
+                        }
+                        else {
+                            var respostaenviofoto = (enviofoto["body"]["envio"] == true) ? { mensagem: "sucesso...", local: 1, arquivo: arquivo_candidato["arquivo_dados"]["name"] } : { mensagem: "nao foi...", local: 0, arquivo: arquivo_candidato["arquivo_dados"]["name"] }
+
+                            console.log(`envio plano...`, respostaenviofoto)
+                            arquivo_candidato.arquivo_enviado = true
+                        }
+                    })
+                }
+            })
+        }
+
+        configuracoes.dormir(100).then(() => {
+            let novasfotos = []
+
+            arquivos_submetidos.forEach(item => {
+                novasfotos.push(`${configuracoes.servidor.arquivos}/${configuracoes.padroes.pasta}/${item.arquivo_novonome}`)
+            })
+
+            console.log(novasfotos)
+
+            Imovel.findByIdAndUpdate(imovel, { $set: { fotos: novasfotos } }).lean().exec((erros, dados) => {
+                res.json({
+                    erro: (erros != null && erros != undefined) ? true : false,
+                    mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er0") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Ed3") : configuracoes.mensagens("Ed6"),
+                    acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
+                    valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? "editado" : "naoeditado"
+                })
+            })
+        })
+    })
 }

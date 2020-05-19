@@ -4,19 +4,18 @@ proprietario
     ok  cadastro
     ok  edicao json
     ok  edicao senha
-    nf  edicao foto
+    ok  edicao foto
     ok  api verificar link solicitacao senha
     ok  api verificar link recuperacao senha
     ok  api verificar link atualizacao senha
     ok  visualizar perfil
-    nf  enviar imovel para analise da agencia
 imovel
     ok  tudo
     ok  cadastro
     ok  visualizacao via agencia (modificada)
     nf  enviar email cadastro realizado
     ok  edicao json
-    nf  edicao foto
+    ok  edicao fotos
 visitas
     ok  tudo
     ok  registrar intencao de visita
@@ -30,8 +29,8 @@ agencia
     ok  login
     ok  cadastro
     ok  edicao json
-    nf  edicao senha
-    nf  edicao foto
+    ok  edicao senha
+    ok  edicao foto
     nf  enviar email recuperar senha
     nf  api recuperar senha
     ok  visualizar perfil

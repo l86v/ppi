@@ -7,6 +7,7 @@ router.post("/api/login", proprietario.api_login)
 router.get("/api/perfil", proprietario.api_perfil)
 router.post("/api/edicao/json", proprietario.api_edicao_json)
 router.post("/api/edicao/senha", proprietario.api_edicao_senha)
+router.post("/api/edicao/foto", proprietario.api_editar_foto)
 router.get("/api/recuperacao", proprietario.api_recuperacao)
 
 module.exports = router

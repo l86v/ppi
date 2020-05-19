@@ -1,6 +1,12 @@
 let Proprietario = require("../models/proprietario.model")
 let configuracoes = require("../configuracoes")
 let bcrypt = require("bcryptjs")
+let random = require("randomatic")
+let formidable = require("formidable")
+let sizeOf = require("image-size")
+let jimp = require("jimp")
+let fs = require("fs")
+let request = require("request")
 
 module.exports.api_tudo = (req, res) => {
     let selecao = {
@@ -225,6 +231,277 @@ module.exports.api_edicao_senha = (req, res) => {
             acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
             valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? dados : null
         })
+    })
+}
+
+module.exports.api_editar_foto = (req, res) => {
+    var form = new formidable.IncomingForm()
+    let proprietario = req.query.proprietario
+
+    form.parse(req, function (erros, fields, files) {
+        if (erros) {
+            res.json({
+                erro: true,
+                acao: false,
+                mensagem: configuracoes.mensagens("Er0"),
+                valores: erros
+            })
+        }
+        else {
+            let selecao = {
+                "_id": 1,
+                "foto": 1
+            }
+
+            Proprietario.findById(proprietario).select(selecao).lean().exec(function (erros, existe) {
+                if (erros) {
+                    res.json({
+                        erro: true,
+                        acao: false,
+                        mensagem: configuracoes.mensagens("Er0"),
+                        valores: erros
+                    })
+                }
+                else {
+                    if (existe) {
+                        var fotobanco = existe["foto"]
+
+                        var status = {
+                            fotopresente: false,
+                            fotoenviada: false,
+                            fotoatualizada: null,
+                            fotolink: null
+                        }
+
+                        status.fotopresente = (files["foto"] != undefined && files["foto"]["size"] != 0) ? true : false
+
+                        if (status.fotopresente === true) {
+                            let limitealtura = 1080
+                            let dimensoes = sizeOf(fs.createReadStream(files["foto"]["path"])["path"])
+
+                            var arquivofinal = `${random("A0a", 32)}.${files["foto"]["name"].split(".").pop()}`
+                            status.fotolink = `${configuracoes.servidor.arquivos}/${configuracoes.padroes.pasta}/${arquivofinal}`
+
+                            if ((Number(dimensoes["height"])) > (Number(limitealtura))) {
+                                jimp.read(fs.createReadStream(files["foto"]["path"])["path"], function (erros, arquivo) {
+                                    if (erros) {
+                                        res.json({
+                                            erro: true,
+                                            acao: false,
+                                            mensagem: configuracoes.mensagens("Er0"),
+                                            valores: erros
+                                        })
+                                    }
+                                    else {
+                                        arquivo.resize(jimp.AUTO, limitealtura).quality(70).write(arquivofinal)
+                                        configuracoes.dormir(250).then(() => {
+                                            fs.readFile(arquivofinal, { encoding: "base64" }, function (erros, imagembase64) {
+                                                if (erros) {
+                                                    res.json({
+                                                        erro: true,
+                                                        acao: false,
+                                                        mensagem: configuracoes.mensagens("Er0"),
+                                                        valores: erros
+                                                    })
+                                                }
+                                                else {
+                                                    configuracoes.dormir(250).then(() => {
+                                                        request.post({ url: configuracoes.servidor.arquivos + "/enviar.64.php", form: { destino: configuracoes.padroes.pasta, imagem: imagembase64, nome: arquivofinal }, json: true }, function (erros, envio) {
+                                                            if (erros) {
+                                                                res.json({
+                                                                    erro: true,
+                                                                    acao: false,
+                                                                    mensagem: configuracoes.mensagens("Er0"),
+                                                                    valores: erros
+                                                                })
+                                                            }
+                                                            else {
+                                                                if (envio["body"]["envio"] != false) {
+                                                                    status.fotoenviada = true
+                                                                    configuracoes.dormir(250).then(() => {
+                                                                        fs.unlink(arquivofinal, function (erros) {
+                                                                            if (erros) {
+                                                                                res.json({
+                                                                                    erro: true,
+                                                                                    acao: false,
+                                                                                    mensagem: configuracoes.mensagens("Er0"),
+                                                                                    valores: erros
+                                                                                })
+                                                                            }
+                                                                            else {
+                                                                                if (status.fotoenviada === true && fotobanco != null) {
+                                                                                    request.post({ url: `${configuracoes.servidor.arquivos}/apagar.php`, form: { arquivo: `./${fotobanco.split(configuracoes.servidor.arquivos).pop()}` }, json: true }, function (erros, resposta) {
+                                                                                        if (erros) {
+                                                                                            res.json({
+                                                                                                erro: true,
+                                                                                                acao: false,
+                                                                                                mensagem: configuracoes.mensagens("Er0"),
+                                                                                                valores: erros
+                                                                                            })
+                                                                                        }
+                                                                                        else {
+                                                                                            console.log({ "foto banco antiga excluída": resposta["body"]["exclusao"] })
+                                                                                        }
+                                                                                    })
+                                                                                }
+                                                                                else {
+                                                                                    console.log("foto banco antiga é null, não pode ser apagada")
+                                                                                }
+
+                                                                                configuracoes.dormir(250).then(() => {
+                                                                                    if (status.fotoenviada === true) {
+                                                                                        Proprietario.findByIdAndUpdate(proprietario, { $set: { foto: status.fotolink, ativo: true } }).lean().exec(function (erros, atualizacao) {
+                                                                                            if (erros) {
+                                                                                                res.json({
+                                                                                                    erro: true,
+                                                                                                    acao: false,
+                                                                                                    mensagem: configuracoes.mensagens("Er0"),
+                                                                                                    valores: erros
+                                                                                                })
+                                                                                            }
+                                                                                            else {
+                                                                                                configuracoes.dormir(250).then(() => {
+                                                                                                    status.fotoatualizada = ((atualizacao === null) ? false : true)
+                                                                                                    res.json({
+                                                                                                        erro: false,
+                                                                                                        acao: true,
+                                                                                                        mensagem: configuracoes.mensagens("Ed2"),
+                                                                                                        valores: null
+                                                                                                    })
+                                                                                                })
+                                                                                            }
+                                                                                        })
+                                                                                    }
+                                                                                    else {
+                                                                                        res.json({
+                                                                                            erro: false,
+                                                                                            acao: false,
+                                                                                            mensagem: configuracoes.mensagens("Ed5"),
+                                                                                            valores: null
+                                                                                        })
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        })
+                                                                    })
+                                                                }
+                                                                else {
+                                                                    res.json({
+                                                                        erro: false,
+                                                                        acao: false,
+                                                                        mensagem: configuracoes.mensagens("Ed5"),
+                                                                        valores: null
+                                                                    })
+                                                                    console.log({ status }, 1, "nada bom... eu acho kkkkk")
+                                                                }
+                                                            }
+                                                        })
+                                                    })
+                                                }
+                                            })
+                                        })
+                                    }
+                                })
+                            }
+                            else {
+                                let upload = {
+                                    pasta: configuracoes.padroes.pasta,
+                                    nome: arquivofinal,
+                                    caminho: files["foto"]["path"],
+                                    arquivo: fs.createReadStream(files["foto"]["path"])
+                                }
+
+                                request.post({ url: `${configuracoes.servidor.arquivos}/enviar.PL.php`, json: true, formData: upload }, function (erros, enviofoto) {
+                                    if (erros) {
+                                        res.json({
+                                            erro: true,
+                                            acao: false,
+                                            mensagem: configuracoes.mensagens("Ed0"),
+                                            valores: erros
+                                        })
+                                    }
+                                    else {
+                                        status.fotoenviada = (enviofoto["body"]["envio"] === true) ? true : false
+
+                                        if (status.fotoenviada === true && fotobanco != null) {
+                                            request.post({ url: `${configuracoes.servidor.arquivos}/apagar.php`, form: { arquivo: `./${fotobanco.split(configuracoes.servidor.arquivos).pop()}` }, json: true }, function (erros, resposta) {
+                                                if (erros) {
+                                                    res.json({
+                                                        erro: true,
+                                                        acao: false,
+                                                        mensagem: configuracoes.mensagens("Ed0"),
+                                                        valores: erros
+                                                    })
+                                                }
+                                                else {
+                                                    console.log({ "foto antiga excluída": resposta["body"]["exclusao"] })
+                                                }
+                                            })
+                                        }
+                                        else {
+                                            console.log("foto banco antiga é null, não pode ser apagada")
+                                        }
+
+                                        Proprietario.findByIdAndUpdate(proprietario, { $set: { foto: status.fotolink, ativo: true } }).lean().exec(function (erros, edicaofoto) {
+                                            if (erros) {
+                                                res.json({
+                                                    erro: true,
+                                                    acao: false,
+                                                    mensagem: configuracoes.mensagens("Ed0"),
+                                                    valores: erros
+                                                })
+                                            }
+                                            else {
+                                                if (edicaofoto) {
+                                                    status.fotoatualizada = true
+
+                                                    configuracoes.dormir(250).then(() => {
+                                                        status.fotoatualizada = ((edicaofoto === null) ? false : true)
+                                                        res.json({
+                                                            erro: false,
+                                                            acao: true,
+                                                            mensagem: configuracoes.mensagens("Ed2"),
+                                                            valores: null
+                                                        })
+                                                    })
+                                                }
+                                                else {
+                                                    res.json({
+                                                        erro: false,
+                                                        acao: false,
+                                                        mensagem: configuracoes.mensagens("Ed5"),
+                                                        valores: null
+                                                    })
+                                                }
+                                            }
+                                        })
+
+                                        let respostaenviofoto = (enviofoto["body"]["envio"] == true) ? console.log("envio da foto concluído") : console.log("não enviou a foto")
+                                    }
+                                })
+                            }
+                        }
+                        else {
+                            res.json({
+                                erro: false,
+                                acao: false,
+                                mensagem: configuracoes.mensagens("Ed5"),
+                                valores: null
+                            })
+                        }
+                    }
+                    else {
+                        res.json({
+                            erro: false,
+                            acao: false,
+                            mensagem: configuracoes.mensagens("Ed0"),
+                            valores: null
+                        })
+
+                    }
+                }
+            })
+        }
     })
 }
 

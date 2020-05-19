@@ -11,6 +11,7 @@ let AgenciaSchema = new mongoose.Schema({
     nomefantasia: { type: String, default: null },
     razaosocial: { type: String, default: null },
     site: { type: String, default: null },
+    logo: { type: String, default: null },
 
     imobiliariatelefone: { type: Number, required: true },
     imobiliariacep: { type: Number, required: true },
