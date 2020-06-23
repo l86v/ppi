@@ -1,0 +1,26 @@
+//- falta funcao... ainda nao sei quais, mas falta.
+//- falta funcao... agenda
+#corpodash
+        #menulateral
+            .superior
+                #menufuncao
+                    i(class="fas fa-bars")
+                #sessao
+                    .imagem
+                        img(src=`${sessao.foto}` alt="")
+                    .nome
+                        | #{sessao.nome}
+            .inferior
+                #links
+                    a(href="/proprietario/pagina-inicial" id=pagina.nome === "proprietario/index" ? "on" : null)
+                        i(class="fas fa-th-large")
+                        span dashboard
+                    a(href="/proprietario/meus-imoveis" id=pagina.nome === "proprietario/imoveis-todos" ? "on" : null)
+                        i(class="fas fa-house-user")
+                        span meus imóveis
+                    a(href="./meus-imoveis/agenda")
+                        i(class="fas fa-calendar-day")
+                        span agenda
+                    a(href="./meus-imoveis/cadastro")
+                        i(class="fas fa-plus")
+                        span cadastrar imóvel

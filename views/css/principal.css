@@ -1,0 +1,211 @@
+html, body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    /* font-family: "Manrope", sans-serif; */
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+header {
+    grid-area: "header";
+    display: grid;
+    height: 6em;
+    width: 100vw;
+    background-color: white;
+    grid-template-areas: "logo";
+    grid-template-columns: 100%;
+}
+
+#divisaologinareas {
+    display: grid;
+    grid-template-columns: repeat(2, 50vw);
+    height: 70vh;
+    background-color: orange;
+    /* background-image: url("https://s2.glbimg.com/ziBrAldWgMfJnq4bZTay1zkVAXk=/e.glbimg.com/og/ed/f/original/2020/03/18/hyundai_elantra_-_perfil.jpg"); */
+    background-image: url("https://images4.alphacoders.com/105/thumb-1920-1051880.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+#divisaologinareas #proprietario, #divisaologinareas #agencia {
+    padding-left: 4vw;
+    padding-top: 4vw;
+}
+
+#divisaologinareas #proprietario {
+    background-color: rgba(12, 12, 12, 0.2);
+}
+
+#divisaologinareas #agencia {
+    -webkit-backdrop-filter: grayscale(100%);
+    backdrop-filter: grayscale(100%);
+}
+
+#divisaologinareas .texto {
+    font-weight: 600;
+    color: white;
+    font-size: 2em;
+}
+
+#divisaologinareas .botao {
+    display: inline-block;
+    padding-top: .75em;
+    padding-bottom: .75em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-top: 1em;
+    border: .025em solid white;
+    border-radius: .75em;
+    background-color: transparent;
+    color: white;
+    font-weight: 400;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.alinhamento {
+    margin-left: 4vw;
+    margin-right: 4vw;
+}
+
+.alinhamento .logo {
+    margin-top: 3vh;
+}
+
+#corpo {
+    display: grid;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+#corpo #tituloarea {
+    font-weight: 400;
+    font-size: 1.5em;
+    color: rgb(64, 126, 186);
+}
+
+#corpo #acesso {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 1em;
+}
+
+#corpo #acesso #textointerno {
+    font-weight: 400;
+    font-size: 1.25em;
+    color: rgb(64, 126, 186);
+}
+
+#corpo #acesso #login, #corpo #acesso #redirecionar {
+    display: grid;
+    padding: 1.5em;
+    border: 0.125em solid rgb(178, 178, 178);
+}
+
+#corpo #acesso #login form {
+    display: grid;
+    margin-top: .5em;
+    grid-row-gap: 1em;
+}
+
+#corpo #acesso #login input[type=email], #corpo #acesso #login input[type=password] {
+    display: grid;
+    font-weight: 400;
+    font-size: .75em;
+    padding: 1em;
+    border: 0;
+    border-radius: .45em;
+    background-color: rgb(234, 233, 231);
+    color: rgb(91, 90, 86);
+    font-family: inherit;
+}
+
+#corpo #acesso #login input[type=submit], #corpo #acesso #redirecionar a, #corpo #cadastro input[type=submit] {
+    background-color: rgb(64, 126, 186);
+    padding: 1em;
+    font-weight: 400;
+    font-size: .75em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: white;
+    border: 0;
+    border-radius: .45em;
+    min-width: 50%;
+    margin: auto;
+    text-decoration: none;
+    font-family: inherit;
+}
+
+#corpo #acesso #login a, #corpo #cadastro #conjunto3 a {
+    color: rgb(64, 126, 186);
+    font-weight: 400;
+    font-size: 1em;
+    text-decoration: none;
+    margin: auto;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#corpo #acesso #redirecionar {
+    display: grid;
+    text-align: center;
+}
+
+#corpo #acesso #redirecionar #textointerno {
+    align-self: end;
+}
+
+#corpo #cadastro {
+    display: grid;
+    margin-left: 16vw;
+    margin-right: 16vw;
+}
+
+#corpo #cadastro .input {
+    display: grid;
+    grid-row-gap: .5em;
+}
+
+#corpo #cadastro .input .descricao {
+    font-weight: 400;
+    font-size: 1em;
+    color: rgb(91, 90, 86);
+}
+
+#corpo #cadastro .input input[type=email], #corpo #cadastro .input input[type=text], #corpo #cadastro .input input[type=password], #corpo #cadastro .input input[type=tel] {
+    background-color: transparent;
+    border: 0.125em solid gray;
+    border-radius: .45em;
+    padding: 1em;
+    color: rgb(91, 90, 86);
+}
+
+#corpo #cadastro #conjunto1 {
+    display: grid;
+    grid-template-columns: 49.5% 49.5%;
+    grid-column-gap: 1%;
+}
+
+#corpo #cadastro #conjunto2 {
+    display: grid;
+    grid-template-columns: 74% 25%;
+    grid-column-gap: 1%;
+}
+
+#corpo #cadastro #conjunto3 {
+    display: grid;
+    margin-top: 1em;
+    text-align: center;
+}
+
+#corpo #cadastro #conjunto3 a {
+    padding-left: .05em;
+    padding-right: .05em;
+}
+
+#corpo #cadastro input[type=submit] {
+    margin-top: 1em;
+}

@@ -1,0 +1,51 @@
+include ./estrutura.preferencias.pug
+body
+    include ./estrutura.menulateral.pug
+    #corpoconteudo
+        .cabecalho
+            a(href="./pagina-inicial" class="logo")
+                img(src=`${configuracoes.servidor.logo}`)
+            form(action="./imoveis/api/buscar" method="post")
+                input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
+
+        .inicio-alinhamento
+            .esquerda
+                .inicio-agenda
+                    .cabecalho
+                        .titulo minha agenda
+                        .subtitulo # isso fica estranho se estiver vazio #
+                    .conteudo
+                        //- entao... agora vai vir o problema.
+            .direita
+                .inicio-contadorimoveis
+                    .cabecalho
+                        .titulo meus imóveis
+                        .subtitulo Meus imóveis cadastrados no Proprimóvel
+                    .conteudo
+                        .numerocontador 27
+                        
+                .inicio-propostas
+                    .cabecalho
+                        .titulo minhas propostas
+                        .subtitulo # isso fica estranho se estiver vazio #
+                    .conteudo
+                        #proposta
+                            .identificador CA8600
+                            .textovalor Valor da proposta: R$ 350.000,00
+                            .textoenvio Enviado: 14/05/2020
+                        #proposta
+                            .identificador AP1020
+                            .textovalor Valor da proposta: R$ 600.500,00
+                            .textoenvio Enviado: 13/05/2020
+                        #proposta
+                            .identificador SI3004
+                            .textovalor Valor da proposta: R$ 1.980.720,00
+                            .textoenvio Enviado: 12/05/2020
+                        #proposta
+                            .identificador GA3395
+                            .textovalor Valor da proposta: R$ 700.000,00
+                            .textoenvio Enviado: 10/05/2020
+                        #proposta
+                            .identificador LO4000
+                            .textovalor Valor da proposta: R$ 3.200.000,00
+                            .textoenvio Enviado: 13/05/2020

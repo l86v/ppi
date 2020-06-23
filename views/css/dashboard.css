@@ -1,0 +1,457 @@
+html, body {
+    background-color: rgb(251, 249, 248);
+}
+
+#corpodash {
+    display: grid;
+}
+
+#corpodash #menulateral {
+    display: grid;
+    position: fixed;
+    height: 100%;
+    width: 20vw;
+    max-width: 20vw;
+    background-color: rgb(65, 119, 168);
+    grid-template-rows: 30vh 70vh;
+}
+
+#corpodash #menulateral .superior {
+    display: grid;
+    grid-template-rows: 20% 80%;
+}
+
+#corpodash #menulateral .superior #menufuncao {
+    display: grid;
+    color: rgb(29, 70, 119);
+    font-weight: 500;
+    font-size: 1.2em;
+    align-items: center;
+    padding-left: 1vw;
+    cursor: pointer;
+}
+
+#corpodash #menulateral .superior #sessao {
+    display: grid;
+    margin-top: .5em;
+    text-align: center;
+}
+
+#corpodash #menulateral .superior #sessao .imagem {
+    display: grid;
+    margin: auto;
+    height: 15vh;
+    width: 15vh;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+#corpodash #menulateral .superior #sessao .imagem img {
+    width: 100%;
+}
+
+#corpodash #menulateral .superior #sessao .nome {
+    font-weight: 500;
+    font-size: 1em;
+    color: rgb(37, 40, 83);
+    margin-top: .5em;
+}
+
+#corpodash #menulateral .inferior {
+    display: grid;
+}
+
+#corpodash #menulateral .inferior #links {
+    grid-template-rows: auto;
+    margin-top: .15em;
+}
+
+#corpodash #menulateral .inferior #links a {
+    display: grid;
+    text-align: center;
+    padding-top: .75em;
+    padding-bottom: .75em;
+    font-weight: 200;
+    text-decoration: none;
+    color: white;
+    background-color: transparent;
+    border-top: .075em solid rgb(64, 126, 186);
+    transition: 0.2s ease-in-out all;
+}
+
+#corpodash #menulateral .inferior #links a:hover {
+    background-color: rgb(32, 88, 145);
+}
+
+#corpodash #menulateral .inferior #links #on {
+    background-color: rgb(37, 40, 83);
+}
+
+#corpodash #menulateral .inferior #links a i {
+    font-size: 1.75em;
+    margin-bottom: .15em;
+}
+
+#corpodash #menulateral .inferior #links a span {
+    font-size: .75em;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+
+#corpoconteudo {
+    display: grid;
+    margin-left: 24vw;
+    margin-right: 4vw;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    grid-row-gap: 2.5em;
+}
+
+#corpoconteudo .cabecalho {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    height: 7vh;
+}
+
+#corpoconteudo .cabecalho .logo {
+    display: grid;
+    align-items: center;
+}
+
+#corpoconteudo .cabecalho .logo img {
+    height: 4vh;
+}
+
+#corpoconteudo .cabecalho form {
+    align-items: center;
+}
+
+#corpoconteudo .cabecalho form input[type=search] {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(234, 233, 231);
+    border: 0;
+    border-radius: .45em;
+    padding: 1em;
+    font-size: .95em;
+    font-family: inherit;
+}
+
+/*  */
+
+#corpoconteudo .inicio-agenda, #corpoconteudo .inicio-contadorimoveis, #corpoconteudo .inicio-propostas, #corpoconteudo .imoveis #imovel {
+    display: grid;
+    background-color: rgb(255, 255, 255);
+    border-radius: .45em;
+    padding: .5em;
+    box-shadow: 0em 0em .5em rgb(218, 218, 218);
+}
+
+#corpoconteudo .inicio-agenda .cabecalho, #corpoconteudo .inicio-contadorimoveis .cabecalho, #corpoconteudo .inicio-propostas .cabecalho {
+    display: block;
+}
+
+#corpoconteudo .inicio-agenda .titulo, #corpoconteudo .inicio-contadorimoveis .titulo, #corpoconteudo .inicio-propostas .titulo, #corpoconteudo .inicio-propostas .conteudo #proposta .identificador {
+    font-weight: 600;
+    font-size: 1em;
+    color: rgb(64, 126, 186);
+    text-transform: uppercase;
+}
+
+#corpoconteudo .inicio-contadorimoveis .numerocontador {
+    font-weight: 400;
+    font-size: 5em;
+    text-align: right;
+    color: rgb(29, 70, 119);
+}
+
+#corpoconteudo .inicio-propostas .conteudo {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-row-gap: .25em;
+}
+
+#corpoconteudo .inicio-propostas .conteudo #proposta {
+    padding: .5em;
+    background-color: rgb(236, 246, 248);
+    border-radius: .45em;
+}
+
+#corpoconteudo .inicio-propostas .conteudo #proposta .identificador {
+    font-size: 1.25em;
+}
+
+#corpoconteudo .inicio-propostas .conteudo #proposta .textovalor, #corpoconteudo .inicio-propostas .conteudo #proposta .textoenvio {
+    font-size: .95em;
+    font-weight: 300;
+    color: rgb(91, 90, 86);
+}
+
+#corpoconteudo .inicio-propostas .conteudo #proposta .textoenvio {
+    font-size: .75em;
+}
+
+#corpoconteudo .inicio-alinhamento {
+    display: grid;
+    grid-template-columns: 60% auto;
+    grid-column-gap: 1em;
+}
+
+#corpoconteudo .inicio-alinhamento .direita {
+    display: inherit;
+    grid-row-gap: 1em;
+}
+
+/*  */
+
+#corpoconteudo .imoveis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: .5em
+}
+
+#corpoconteudo .imoveis #imovel {
+    min-height: 25em;
+    grid-template-rows: 60% 40%;
+    background-color: white;
+    text-decoration: none;
+}
+
+#corpoconteudo .imoveis #imovel .imagem {
+    display: inherit;
+    background-color: rgb(37, 40, 83);
+}
+
+#corpoconteudo .imoveis #imovel .imagem img {
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    object-fit: cover;
+}
+
+#corpoconteudo .imoveis #imovel .detalhes {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    /* background-color: yellow; */
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .primarios {
+    display: inherit;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+    /* background-color: teal; */
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .primarios .valor, #corpoconteudo .imoveis #imovel .detalhes .primarios .identificador {
+    font-size: 1.5em;
+    color: rgb(91, 90, 86);
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .primarios .identificador {
+    text-align: right;
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios .endereco {
+    font-weight: 300;
+    font-size: .95em;
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios .endereco i {
+    font-size: .75em;
+    margin-right: .25em;
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios {
+    display: inherit;
+    grid-template-rows: repeat(2, auto);
+    color: rgb(91, 90, 86);
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios .grade {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: .25em;
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios .grade .dado {
+    display: inherit;
+    /* background-color: greenyellow; */
+}
+
+#corpoconteudo .imoveis #imovel .detalhes .secundarios .grade i, #corpoconteudo .imoveis #imovel .detalhes .secundarios .grade span {
+    display: block;
+    font-size: .75em;
+}
+
+#corpoconteudo .imovel-visualizar {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-row-gap: 1em;
+}
+
+#corpoconteudo .imovel-visualizar .cabecalho {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 70vh;
+    background-color: cyan;
+}
+
+#corpoconteudo .imovel-visualizar .cabecalho .imagem {
+    display: block;
+    width: 100%;
+    height: inherit;
+    background-color: rgb(37, 40, 83);
+}
+
+#corpoconteudo .imovel-visualizar .cabecalho .imagem img {
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    object-fit: cover;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-row-gap: 1em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .primarios {
+    display: inherit;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .primarios .valor, #corpoconteudo .imovel-visualizar .detalhes .primarios .identificador, #corpoconteudo .imovel-visualizar .detalhes .primarios .compartilhar a {
+    font-size: 1.5em;
+    color: rgb(91, 90, 86);
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .primarios .compartilhar {
+    text-align: center;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .primarios .compartilhar a {
+    text-decoration: underline;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .primarios .identificador {
+    text-align: right;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .endereco {
+    font-weight: 300;
+    font-size: 1.25em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .endereco i {
+    font-size: .85em;
+    margin-right: .25em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios {
+    display: inherit;
+    grid-template-rows: repeat(2, auto);
+    color: rgb(91, 90, 86);
+    grid-row-gap: 1em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .grade {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: .25em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .grade .dado {
+    display: inherit;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .grade span {
+    font-weight: 300;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .secundarios .grade i, #corpoconteudo .imovel-visualizar .detalhes .secundarios .grade span {
+    display: block;
+    font-size: .95em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .terciarios {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    /* width: 75%; */
+    grid-gap: .5em;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .terciarios a {
+    background-color: rgb(65, 119, 168);
+    text-align: center;
+    padding: .5em;
+    border-radius: .5em;
+    text-decoration: none;
+    color: white;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .terciarios a:nth-child(7) {
+    background-color: rgb(82, 82, 78);
+    grid-column: 2/3;
+}
+
+#corpoconteudo .imovel-visualizar .detalhes .terciarios a i {
+    font-size: .95em;
+    margin-right: .2em;
+}
+
+#corpoconteudo .imovel-visualizar .descricao .titulo {
+    color: black;
+    font-weight: 700;
+    font-size: .95em;
+    margin-top: .5em;
+    margin-bottom: .25em;
+}
+
+#corpoconteudo .imovel-visualizar .descricao {
+    display: grid;
+    grid-row-gap: .5em;
+}
+
+#corpoconteudo .imovel-visualizar .descricao .texto {
+    display: grid;
+    padding: .25em;
+    background-color: rgb(245, 244, 242);
+    color: rgb(82, 82, 78);
+}
+
+#corpoconteudo .imovel-visualizar .descricao .listas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 1em;
+}
+
+#corpoconteudo .imovel-visualizar .descricao .lista {
+    display: grid;
+}
+
+#corpoconteudo .imovel-visualizar .descricao .lista .linha {
+    display: inherit;
+    grid-gap: .25em;
+    grid-template-columns: 65% 35%;
+    padding: .5em;
+    color: rgb(82, 82, 78);
+}
+
+#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(odd) {
+    background-color: rgb(245, 244, 242);
+    /* background-color: rgba(160, 117, 31, 0.459); */
+}
+
+#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(even) {
+    background-color: rgb(254, 253, 252);
+    /* background-color: rgba(17, 46, 175, 0.329); */
+}
+
+#corpoconteudo .imovel-visualizar .descricao .lista .linha .dado i {
+    color: rgb(29, 70, 119);
+}

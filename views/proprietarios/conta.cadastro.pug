@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+html(lang="br")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        title #{pagina.titulo}
+        link(href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet")
+        link(rel="stylesheet" href="../css/principal.css")
+
+    body
+        header
+            .alinhamento
+                a(href="/")
+                    img(src="/midia/Assets_logo.png" class="logo")
+
+        #corpo
+            .alinhamento
+                #cadastro
+                    #tituloarea Preencha todos os campos abaixo para finalizar o seu cadastro.
+                    br
+                    form(action="./cadastrar" method="post")
+                        .input  
+                            .descricao Nome
+                            input#nome(type="text" name="nome" required autocomplete="off")
+                        #conjunto1
+                            .input
+                                .descricao Telefone
+                                input#telefone(type="tel" name="telefone" required autocomplete="off")
+                            .input
+                                .descricao Celular
+                                input#celular(type="tel" name="celular" required autocomplete="off")
+                        .input
+                            .descricao E-mail
+                            input(type="email" name="email" required autocomplete="off")
+                        #conjunto1
+                            .input
+                                .descricao RG
+                                input#rg(type="tel" name="rg" required autocomplete="off")
+                            .input
+                                .descricao CPF
+                                input#cpf(type="tel" name="cpf" required autocomplete="off")
+
+                        #conjunto2  
+                            .input
+                                .descricao Cidade
+                                input#cidade(type="text" name="cidade" required autocomplete="off")
+                            .input
+                                .descricao UF
+                                input#uf(type="text" name="uf" required autocomplete="off")
+                        .input
+                            .descricao Bairro
+                            input#bairro(type="text" name="bairro" required autocomplete="off")
+                        #conjunto2  
+                            .input
+                                .descricao Rua
+                                input#rua(type="text" name="rua" required autocomplete="off")
+                            .input
+                                .descricao Número
+                                input#numero(type="tel" name="numero" autocomplete="off")
+                        #conjunto2
+                            .input
+                                .descricao Complemento
+                                input#complemento(type="text" name="complemento" autocomplete="off")
+                            .input
+                                .descricao CEP
+                                input#cep(type="tel" name="cep" required autocomplete="off")
+                        #conjunto3
+                            span
+                                input#termos(type="checkbox" name="termos" required)
+                                | &nbsp;Eu aceito&nbsp;
+                                a(href="./termos" target="_blank") Termos e Política de Privacidade
+                                | &nbsp;do site
+                        .input
+                            input(type="submit" value="Cadastrar")

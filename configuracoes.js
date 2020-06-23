@@ -18,8 +18,9 @@ module.exports.servidor = {
     porta: (process.env.PORT || 80),
     endereco: "http://localhost",
     ano: moment().format("YYYY"),
-    sitegisul: "http://brgisul.herokuapp.com",
+    sitegisul: "http://gisulcompany.com",
     arquivos: "http://ppi.gisulcompany.com",
+    logo: "http://ppi.gisulcompany.com/logo.png",
     emailgisul: "contato@gisulcompany.com",
     segredo: `~AX,,IU,X-D1W,&C0B$X[&5Z]R8FG3_F,1%1%!Q6!9$RUJTK3S",L[#^(LZR{=FQE[2IVCS-}OP1F-9+1.$-6)RO1-0AA+]_NTTL=%K}]O][&+GI.9F53WB;Y{^N"I6LD^^B+)QPX3&GO,KILC@$^.L.(]S[Y86X;KV&MBC!8Y+#L5@1%=1OH)MMK358}J0EI8(O$NUA%$_[AR=#}V;Y&}XCBZ,W"M3=E{FG!9&R_U!&0!L@7)5B##T.DSY){E~@}8;CN@{BL[W&Y)GH&;AAG-F;CZI#7&]ZF#EB!YE70FY(1NOV+.X0XT$FDAYXCH~)FO_B-10!+NN7P,48XY00FY^!3MLVVV68TN_(G&)Z;7="=;WD8+U2{2HSL_R&HG];6!("AIZO4S+EAK~PP"`, // segredo do "express-session"
     token: `cacareco-hiperbolico-MBqA350ku-carrapato-biruta-0`,
@@ -48,6 +49,10 @@ module.exports.email = {
 
 module.exports.padroes = {
     pasta: "uploads",
+    usuario: {
+        nome: "Nautilus",
+        foto: `${this.servidor.arquivos}/uploads/nautilus.jpg` 
+    },
     imovel: {
         tipos: [
             { "codigo": "cvp", "mensagem": "Casa em via pública" },

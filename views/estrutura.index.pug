@@ -4,51 +4,27 @@ html(lang="br")
         meta(charset="UTF-8")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible" content="ie=edge")
-        title Proprimóvel
+        title #{pagina.titulo}
         link(href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet")
-
-        style.
-            html, body {
-                background-color: white;
-                margin: 0;
-                padding: 0;
-                font-family: "Manrope", sans-serif;
-            }
-
-            header {
-                grid-area: "header";
-                display: grid;
-                height: 6em;
-                width: 100vw;
-                background-color: white;
-                grid-template-areas: "logo";
-                grid-template-columns: 100%;
-            }
-
-            .alinhamento {
-                margin-left: 4vw;
-                margin-right: 4vw;
-            }
+        link(rel="stylesheet" href="./css/principal.css")
 
     body
         header
             .alinhamento
-                img(src="/midia/Assets_logo.png")
+                a(href="/")
+                    img(src="/midia/Assets_logo.png" class="logo")
 
-        
         #divisaologinareas
             #proprietario
                 .texto Sou
                     br
-                    | PRORPIETÁRIO
-                .botao
-                    a(href="/proprietario/login") Entrar
+                    | PROPRIETÁRIO
+                a(href="/proprietario/login" class="botao") Entrar
             #agencia
                 .texto Sou
                     br
                     | IMOBILIÁRIA
-                .botao
-                    a(href="/agencia/login") Entrar
+                a(href="/agencia/login" class="botao") Entrar
         #funcionamento
             #titulocentro COMO O APP PROPRIMÓVEL FUNCIONA?
             .alinhamento

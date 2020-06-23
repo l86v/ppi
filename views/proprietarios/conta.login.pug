@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang="br")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        title #{pagina.titulo}
+        link(href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600&display=swap" rel="stylesheet")
+        link(rel="stylesheet" href="../css/principal.css")
+
+    body
+        header
+            .alinhamento
+                a(href="/")
+                    img(src="/midia/Assets_logo.png" class="logo")
+
+        #corpo
+            .alinhamento
+                #tituloarea
+                    | Proprietário
+                #acesso
+                    #login
+                        #textointerno Já sou cliente
+                        form(action="./login" method="post")
+                            input(type="email" name="email" placeholder="E-mail" required autocomplete="off" autofocus)
+                            input(type="password" name="senha" placeholder="Senha" required autocomplete="off")
+                            input(type="submit" value="Entrar")
+                            a(href="./esqueci-minha-senha") Esqueceu sua senha?
+                    #redirecionar
+                        #textointerno Ainda não sou cliente
+                        a(href="./cadastrar") Preencher cadastro
