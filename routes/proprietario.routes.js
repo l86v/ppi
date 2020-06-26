@@ -15,5 +15,6 @@ router.get("/cadastrar", proprietario.pug_cadastro)
 router.get("/pagina-inicial", proprietario.pug_index)
 router.get("/meus-imoveis", proprietario.pug_imoveis_todos)
 router.get("/meus-imoveis/visualizar", proprietario.pug_imoveis_visualizar)
+router.get("/meus-imoveis/cadastro", proprietario.pug_imoveis_cadastro)
 
 module.exports = router

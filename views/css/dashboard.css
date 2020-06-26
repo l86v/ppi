@@ -12,6 +12,7 @@ html, body {
     height: 100%;
     width: 20vw;
     max-width: 20vw;
+    top: 0;
     background-color: rgb(65, 119, 168);
     grid-template-rows: 30vh 70vh;
 }
@@ -212,6 +213,7 @@ html, body {
 
 #corpoconteudo .imoveis #imovel {
     min-height: 25em;
+    max-height: 30em;
     grid-template-rows: 60% 40%;
     background-color: white;
     text-decoration: none;
@@ -430,11 +432,11 @@ html, body {
     grid-column-gap: 1em;
 }
 
-#corpoconteudo .imovel-visualizar .descricao .lista {
+#corpoconteudo .imovel-visualizar .descricao .lista, #corpoconteudo .imovel-visualizar .descricao .listacheia {
     display: grid;
 }
 
-#corpoconteudo .imovel-visualizar .descricao .lista .linha {
+#corpoconteudo .imovel-visualizar .descricao .lista .linha, #corpoconteudo .imovel-visualizar .descricao .listacheia .linha {
     display: inherit;
     grid-gap: .25em;
     grid-template-columns: 65% 35%;
@@ -442,16 +444,98 @@ html, body {
     color: rgb(82, 82, 78);
 }
 
-#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(odd) {
+#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(odd), #corpoconteudo .imovel-visualizar .descricao .listacheia .linha:nth-child(odd) {
     background-color: rgb(245, 244, 242);
     /* background-color: rgba(160, 117, 31, 0.459); */
 }
 
-#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(even) {
+#corpoconteudo .imovel-visualizar .descricao .lista .linha:nth-child(even), #corpoconteudo .imovel-visualizar .descricao .listacheia .linha:nth-child(even) {
     background-color: rgb(254, 253, 252);
     /* background-color: rgba(17, 46, 175, 0.329); */
 }
 
-#corpoconteudo .imovel-visualizar .descricao .lista .linha .dado i {
+#corpoconteudo .imovel-visualizar .descricao .lista .linha .dado i, #corpoconteudo .imovel-visualizar .descricao .listacheia .linha .dado i {
     color: rgb(29, 70, 119);
+}
+
+#corpoconteudo .imovel-cadastro {
+    display: grid;
+    grid-gap: 1em;
+}
+
+#corpoconteudo .imovel-cadastro .lista, #corpoconteudo .imovel-cadastro .listacheia {
+    display: grid;
+    width: 50%;
+}
+
+#corpoconteudo .imovel-cadastro .lista .linha, #corpoconteudo .imovel-cadastro .listacheia .linha {
+    display: inherit;
+    grid-gap: .25em;
+    grid-template-columns: 65% 35%;
+    padding: .5em;
+    color: rgb(82, 82, 78);
+}
+
+#corpoconteudo .imovel-cadastro .lista .dado, #corpoconteudo .imovel-cadastro .listacheia .dado {
+    text-align: right;
+    margin-right: .5em;
+}
+
+#corpoconteudo .imovel-cadastro .lista .linha:nth-child(odd), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(odd)  {
+    background-color: rgb(245, 244, 242);
+}
+
+#corpoconteudo .imovel-cadastro .lista .linha:nth-child(even), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(even)  {
+    background-color: rgb(254, 253, 252);
+}
+
+#corpoconteudo .imovel-cadastro .zona {
+    display: grid;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-bottom: .5em;
+}
+
+#corpoconteudo .imovel-cadastro .zona .atributos {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-gap: .5em;
+    grid-row-gap: 1em;
+}
+
+#corpoconteudo .imovel-cadastro .zona .titulo {
+    color: rgb(82, 82, 78);
+    font-weight: 400;
+    font-size: .95em;
+    margin-bottom: .25em;
+}
+
+#corpoconteudo .imovel-cadastro .zona .atributo-titulo select, #corpoconteudo .imovel-cadastro .zona .atributo-titulo input, #corpoconteudo .imovel-cadastro .zona .atributo input, #corpoconteudo .imovel-cadastro .zona .atributo-simples input, #corpoconteudo .imovel-cadastro .zona .atributo-duplo input, #corpoconteudo .imovel-cadastro .zona .atributo-duplo-titulo {
+    display: inherit;
+    box-sizing: border-box;
+    min-width: 100%;
+    max-width: 100%;
+    font-family: inherit;
+    font-size: .75em;
+    color: rgb(82, 82, 78);
+    padding: 1em;
+    -webkit-appearance: none;
+    border: 0.095em solid rgb(138, 138, 138);
+    border-radius: .5em;
+}
+
+#corpoconteudo .imovel-cadastro .zona .atributo-duplo {
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: .5em;
+}
+
+#corpoconteudo .imovel-cadastro .zona .atributo-duplo input {
+    grid-row: 2/2;
+}
+
+#corpoconteudo .imovel-cadastro .zona .listacheia {
+    width: 100%;
+    box-sizing: border-box;
 }

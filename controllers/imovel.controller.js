@@ -29,73 +29,75 @@ module.exports.api_tudo = (req, res) => {
 module.exports.api_cadastro = (req, res) => {
     let corpo = req.body
 
-    Imovel.countDocuments((erros, numero) => {
-        if (erros) {
-            res.json({
-                erro: true,
-                mensagem: configuracoes.mensagens("Er0"),
-                acao: false,
-                dados: null
-            })
-        }
-        else {
-            let novoimovel = new Imovel({
-                identificador: Number(numero + 1),
-                proprietario: corpo.proprietario,
-                titulo: String(corpo.titulo).trim(),
-                descricao: String(corpo.descricao).trim(),
-                matriculanumero: Number(configuracoes.numeros(corpo.matriculanumero)),
-                matriculacartorio: String(corpo.matriculacartorio).trim(),
+    res.send(corpo)
 
-                cep: Number(configuracoes.numeros(corpo.cep)),
-                logradouro: String(corpo.logradouro).trim(),
-                bairro: String(corpo.bairro).trim(),
-                cidade: String(corpo.cidade).trim(),
-                estado: corpo.estado,
-                numero: corpo.numero,
-                complemento: (corpo.complemento != undefined && corpo.complemento != null) ? configuracoes.numeros(corpo.complemento) : null,
+    // Imovel.countDocuments((erros, numero) => {
+    //     if (erros) {
+    //         res.json({
+    //             erro: true,
+    //             mensagem: configuracoes.mensagens("Er0"),
+    //             acao: false,
+    //             dados: null
+    //         })
+    //     }
+    //     else {
+    //         let novoimovel = new Imovel({
+    //             identificador: Number(numero + 1),
+    //             proprietario: corpo.proprietario,
+    //             titulo: String(corpo.titulo).trim(),
+    //             descricao: String(corpo.descricao).trim(),
+    //             matriculanumero: Number(configuracoes.numeros(corpo.matriculanumero)),
+    //             matriculacartorio: String(corpo.matriculacartorio).trim(),
 
-                vagas: Number(configuracoes.numeros(corpo.vagas)),
-                suites: Number(configuracoes.numeros(corpo.suites)),
-                quartos: Number(configuracoes.numeros(corpo.quartos)),
-                banheiros: Number(configuracoes.numeros(corpo.banheiros)),
+    //             cep: Number(configuracoes.numeros(corpo.cep)),
+    //             logradouro: String(corpo.logradouro).trim(),
+    //             bairro: String(corpo.bairro).trim(),
+    //             cidade: String(corpo.cidade).trim(),
+    //             estado: corpo.estado,
+    //             numero: corpo.numero,
+    //             complemento: (corpo.complemento != undefined && corpo.complemento != null) ? configuracoes.numeros(corpo.complemento) : null,
 
-                valorvenda: Number(configuracoes.numeros(corpo.valorvenda)),
-                valorlocacao: Number(configuracoes.numeros(corpo.valorlocacao)),
-                valorcondominio: Number(configuracoes.numeros(corpo.valorcondominio)),
-                condicaopagamentoiptu: String(corpo.condicaopagamentoiptu).trim(),
+    //             vagas: Number(configuracoes.numeros(corpo.vagas)),
+    //             suites: Number(configuracoes.numeros(corpo.suites)),
+    //             quartos: Number(configuracoes.numeros(corpo.quartos)),
+    //             banheiros: Number(configuracoes.numeros(corpo.banheiros)),
 
-                areatotal: Number(configuracoes.numeros(corpo.areatotal)),
-                areautil: Number(configuracoes.numeros(corpo.areautil)),
-                areamedidafrente: Number(configuracoes.numeros(corpo.areamedidafrente)),
-                areamedidalateral: Number(configuracoes.numeros(corpo.areamedidalateral)),
-                areatopografia: String(corpo.areatopografia).trim(),
+    //             valorvenda: Number(configuracoes.numeros(corpo.valorvenda)),
+    //             valorlocacao: Number(configuracoes.numeros(corpo.valorlocacao)),
+    //             valorcondominio: Number(configuracoes.numeros(corpo.valorcondominio)),
+    //             condicaopagamentoiptu: String(corpo.condicaopagamentoiptu).trim(),
 
-                salaestar: (corpo.salaestar === "Sim") ? true : false,
-                escritorio: (corpo.escritorio === "Sim") ? true : false,
-                piscina: (corpo.piscina === "Sim") ? true : false,
-                churrasqueira: (corpo.churrasqueira === "Sim") ? true : false,
-                tipogaragem: corpo.tipogaragem,
+    //             areatotal: Number(configuracoes.numeros(corpo.areatotal)),
+    //             areautil: Number(configuracoes.numeros(corpo.areautil)),
+    //             areamedidafrente: Number(configuracoes.numeros(corpo.areamedidafrente)),
+    //             areamedidalateral: Number(configuracoes.numeros(corpo.areamedidalateral)),
+    //             areatopografia: String(corpo.areatopografia).trim(),
 
-                finalidade: corpo.finalidade,
-                categoria: corpo.categoria,
-                subcategoria: corpo.subcategoria,
-                condominio: (corpo.condominio === "Sim") ? true : false,
-                andar: Number(configuracoes.numeros(corpo.andar)),
+    //             salaestar: (corpo.salaestar === "Sim") ? true : false,
+    //             escritorio: (corpo.escritorio === "Sim") ? true : false,
+    //             piscina: (corpo.piscina === "Sim") ? true : false,
+    //             churrasqueira: (corpo.churrasqueira === "Sim") ? true : false,
+    //             tipogaragem: corpo.tipogaragem,
 
-                datacadastro: configuracoes.agora("completo")
-            })
+    //             finalidade: corpo.finalidade,
+    //             categoria: corpo.categoria,
+    //             subcategoria: corpo.subcategoria,
+    //             condominio: (corpo.condominio === "Sim") ? true : false,
+    //             andar: Number(configuracoes.numeros(corpo.andar)),
 
-            Imovel.create(novoimovel, (erros, dados) => {
-                res.json({
-                    erro: (erros != null && erros != undefined) ? true : false,
-                    mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er4") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Ca4") : configuracoes.mensagens("Ca0"),
-                    acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
-                    valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? novoimovel._id : null
-                })
-            })
-        }
-    })
+    //             datacadastro: configuracoes.agora("completo")
+    //         })
+
+    //         Imovel.create(novoimovel, (erros, dados) => {
+    //             res.json({
+    //                 erro: (erros != null && erros != undefined) ? true : false,
+    //                 mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er4") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Ca4") : configuracoes.mensagens("Ca0"),
+    //                 acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
+    //                 valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? novoimovel._id : null
+    //             })
+    //         })
+    //     }
+    // })
 }
 
 module.exports.api_visualizar_via_agencia = (req, res) => {
@@ -245,7 +247,7 @@ module.exports.api_edicao_json = (req, res) => {
     })
 }
 
-module.exports.api_edicao_fotos = (req, res) => {    
+module.exports.api_edicao_fotos = (req, res) => {
     // para apagar, tem que ser foto por foto em uma api diferente.
     // para reorganizar tem que ser uma api diferente.
 
@@ -332,7 +334,7 @@ module.exports.api_edicao_fotos = (req, res) => {
                 else {
                     console.log(`foto ${arquivo_candidato['arquivo_novonome']} menor que ${limitealtura} de altura, plano.`)
                     arquivofinal = arquivo_candidato["arquivo_novonome"]
-                    
+
                     let upload = {
                         pasta: configuracoes.padroes.pasta,
                         nome: arquivofinal,

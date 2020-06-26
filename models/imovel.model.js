@@ -28,19 +28,21 @@ let ImovelSchema = new mongoose.Schema({
     valorvenda: { type: Number, required: true },
     valorlocacao: { type: Number, required: true },
     valorcondominio: { type: Number, required: true },
-    condicaopagamentoiptu: { type: String, required: true },
+    condicaopagamentoiptu: { type: String, required: true }, // anual, mensal, x.
 
     areatotal: { type: Number, required: true },
     areautil: { type: Number, required: true },
     areamedidafrente: { type: Number, required: true },
     areamedidalateral: { type: Number, required: true },
-    areatopografia: { type: String, required: true }, // aclive, bla bla bla.
+    areatopografia: { type: String, required: true }, // aclive, declive, x.
+    andar: { type: Number, required: false, default: 0 },
 
     salaestar: { type: Boolean, required: false, default: false },
     escritorio: { type: Boolean, required: false, default: false },
     piscina: { type: Boolean, required: false, default: false },
     churrasqueira: { type: Boolean, required: false, default: false },
     tipogaragem: { type: String, required: true }, // fixa, livre (select options)
+    tipovagas: { type: String, required: false, default: "Fixa" },
 
     finalidade: { type: String, default: null }, // venda, locacao, venda/locacao (oi?)
     categoria: { type: String, default: null }, // residencial, comercial, bla bla bla.

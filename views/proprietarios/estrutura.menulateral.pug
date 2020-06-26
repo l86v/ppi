@@ -1,5 +1,3 @@
-//- falta funcao... ainda nao sei quais, mas falta.
-//- falta funcao... agenda
 #corpodash
         #menulateral
             .superior
@@ -18,9 +16,9 @@
                     a(href="/proprietario/meus-imoveis" id=pagina.nome === "proprietario/imoveis-todos" ? "on" : null)
                         i(class="fas fa-house-user")
                         span meus imóveis
-                    a(href="./meus-imoveis/agenda")
+                    a(href="/proprietario/agenda")
                         i(class="fas fa-calendar-day")
                         span agenda
-                    a(href="./meus-imoveis/cadastro")
+                    a(href="/proprietario/meus-imoveis/cadastro" id=pagina.nome === "proprietario/imoveis-cadastro" ? "on" : null)
                         i(class="fas fa-plus")
                         span cadastrar imóvel

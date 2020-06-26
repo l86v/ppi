@@ -5,7 +5,7 @@ body
         .cabecalho
             a(href="./pagina-inicial" class="logo")
                 img(src=`${configuracoes.servidor.logo}`)
-            form(action="./imoveis/api/buscar" method="post")
+            form(action="/imoveis/api/buscar" method="post")
                 input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
         .imoveis
             a(href=`./meus-imoveis/visualizar?imovel=CA0001` id="imovel")

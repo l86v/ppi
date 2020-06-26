@@ -779,3 +779,31 @@ module.exports.pug_imoveis_visualizar = (req, res) => { // aqui mesmo que eu to.
     // })
     // }
 }
+
+module.exports.pug_imoveis_cadastro = (req, res) => { // aqui mesmo que eu to.
+    let arquivo = `${pasta}/conta.imoveis.cadastro.pug`
+
+    // if (session.id_sessao_cliente != undefined && session.id_sessao_cliente != null) {
+    //     Proprietario.findById(session.id_sessao_proprietario).lean().exec((erros, sessao) => {
+    //         if (erros != undefined && dados === null) {
+    //             res.redirect(`/${pasta}/login?mensagem=3`)
+    //         }
+    //         else {
+    let pacote = {
+        configuracoes: configuracoes,
+        pagina: {
+            nome: "proprietario/imoveis-cadastro",
+            titulo: `Cadastrar imóvel | ${configuracoes.servidor.titulo}`
+        },
+        // sessao: sessao
+        sessao: {
+            nome: configuracoes.padroes.usuario.nome,
+            foto: configuracoes.padroes.usuario.foto
+        },
+    }
+
+    res.render(arquivo, pacote)
+    // }
+    //     })
+    // }
+}
