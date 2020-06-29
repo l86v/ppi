@@ -481,11 +481,11 @@ html, body {
     margin-right: .5em;
 }
 
-#corpoconteudo .imovel-cadastro .lista .linha:nth-child(odd), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(odd)  {
+#corpoconteudo .imovel-cadastro .lista .linha:nth-child(odd), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(odd) {
     background-color: rgb(245, 244, 242);
 }
 
-#corpoconteudo .imovel-cadastro .lista .linha:nth-child(even), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(even)  {
+#corpoconteudo .imovel-cadastro .lista .linha:nth-child(even), #corpoconteudo .imovel-cadastro .listacheia .linha:nth-child(even) {
     background-color: rgb(254, 253, 252);
 }
 
@@ -538,4 +538,15 @@ html, body {
 #corpoconteudo .imovel-cadastro .zona .listacheia {
     width: 100%;
     box-sizing: border-box;
+}
+
+#corpoconteudo .imovel-cadastro .zona textarea {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: .95em;
+    color: rgb(82, 82, 78);
+    resize: none;
+    -webkit-appearance: none;
 }

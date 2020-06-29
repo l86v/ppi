@@ -2,7 +2,6 @@ html, body {
     background-color: white;
     margin: 0;
     padding: 0;
-    /* font-family: "Manrope", sans-serif; */
     font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -21,8 +20,7 @@ header {
     grid-template-columns: repeat(2, 50vw);
     height: 70vh;
     background-color: orange;
-    /* background-image: url("https://s2.glbimg.com/ziBrAldWgMfJnq4bZTay1zkVAXk=/e.glbimg.com/og/ed/f/original/2020/03/18/hyundai_elantra_-_perfil.jpg"); */
-    background-image: url("https://images4.alphacoders.com/105/thumb-1920-1051880.jpg");
+    background-image: url("https://previews.123rf.com/images/feverpitched/feverpitched1604/feverpitched160400017/56110399-model-home-engineer-pencil-and-set-of-keys-resting-on-custom-house-plans-.jpg");
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
@@ -30,8 +28,7 @@ header {
 }
 
 #divisaologinareas #proprietario, #divisaologinareas #agencia {
-    padding-left: 4vw;
-    padding-top: 4vw;
+    padding: 5vw;
 }
 
 #divisaologinareas #proprietario {
@@ -41,12 +38,14 @@ header {
 #divisaologinareas #agencia {
     -webkit-backdrop-filter: grayscale(100%);
     backdrop-filter: grayscale(100%);
+    background-color: rgba(0, 0, 0, 0.719);
 }
 
 #divisaologinareas .texto {
-    font-weight: 600;
+    font-weight: 400;
     color: white;
     font-size: 2em;
+    text-shadow: 0em 0em .5em grey;
 }
 
 #divisaologinareas .botao {
@@ -58,11 +57,16 @@ header {
     margin-top: 1em;
     border: .025em solid white;
     border-radius: .75em;
-    background-color: transparent;
+    background-color: rgba(59, 59, 59, 0.363);
     color: white;
     font-weight: 400;
-    font-size: 1.5em;
+    font-size: 1.25em;
     text-decoration: none;
+    transition: .5s ease background-color;
+}
+
+#divisaologinareas .botao:hover {
+    background-color: rgb(24, 137, 250);
 }
 
 .alinhamento {
@@ -208,4 +212,108 @@ header {
 
 #corpo #cadastro input[type=submit] {
     margin-top: 1em;
+}
+
+#funcionamento {
+    display: inherit;
+    margin-top: 3em;
+    grid-gap: 1em;
+}
+
+#funcionamento #titulocentro {
+    font-weight: 600;
+    font-size: 2em;
+    color: rgb(64, 126, 186);
+    text-align: center;
+}
+
+#funcionamento .alinhamento {
+    display: grid;
+    margin-top: 2em;
+    grid-gap: 1em;
+}
+
+#funcionamento .alinhamento .componente {
+    display: inherit;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+#funcionamento .alinhamento .componente .texto {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: rgb(91, 90, 86);
+    font-weight: 400;
+    font-family: inherit;
+}
+
+#funcionamento .alinhamento .componente .imagem img {
+    height: 8em;
+}
+
+#funcionamento .alinhamento .componente:nth-child(odd) {
+    grid-template-columns: 15% 85%;
+}
+
+#funcionamento .alinhamento .componente:nth-child(even) {
+    grid-template-columns: 85% 15%;
+}
+
+#funcionamento .alinhamento .componente:nth-child(even) .texto {
+    text-align: right;
+}
+
+#funcionamento .alinhamento .componente:nth-child(even) .imagem {
+    text-align: right;
+}
+
+#funcionamento .alinhamento .especial {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    min-height: 20em;
+    margin-top: 2em;
+}
+
+#funcionamento .alinhamento .especial .imagem {
+    display: block;
+    width: 100%;
+}
+
+#funcionamento .alinhamento .especial .imagem img {
+    display: block;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    object-fit: cover;
+}
+
+#funcionamento .alinhamento .especial .descricao {
+    display: grid;
+}
+
+#funcionamento .alinhamento .especial .descricao .titulo {
+    font-weight: 600;
+    font-size: 2em;
+    color: rgb(64, 126, 186);
+}
+
+#funcionamento .alinhamento .especial .descricao .texto {
+    font-weight: 500;
+    font-size: 1em;
+    color: rgb(91, 90, 86);
+}
+
+#funcionamento .alinhamento .especial .descricao .links {
+    display: inline-block;
+}
+
+#funcionamento .alinhamento .especial .descricao .links a {
+    margin-right: .5em;
+}
+
+#funcionamento .alinhamento .especial .descricao .links a img {
+    max-height: 3em;
 }
