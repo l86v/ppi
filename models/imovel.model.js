@@ -1,57 +1,56 @@
 let mongoose = require("mongoose")
 
 let ImovelSchema = new mongoose.Schema({
-    // identificacao
     identificador: { type: Number, required: true },
     proprietario: { type: mongoose.SchemaTypes.ObjectId, ref: "Proprietario" },
-    titulo: { type: String, required: true },
-    descricao: { type: String, required: true },
+    chaves: { type: mongoose.SchemaTypes.ObjectId, ref: "Chaves", required: false },
     fotos: { type: Array, default: [] },
-    matriculanumero: { type: Number, required: true },
-    matriculacartorio: { type: String, required: true },
 
-    // localizacao
-    cep: { type: Number, required: true },
-    logradouro: { type: String, required: true },
-    bairro: { type: String, required: true },
+    finalidade: { type: String, required: true },
+    categoria: { type: String, required: true },
+    subcategoria: { type: String, required: true },
+    condominio: { type: Boolean, default: false },
+    andar: { type: Number, default: 0 },
+
     cidade: { type: String, required: true },
-    estado: { type: String, required: true },
+    bairro: { type: String, required: true },
+    logradouro: { type: String, required: true },
     numero: { type: String, required: true },
-    complemento: { type: String, default: null },
+    complemento: { type: String, default: false },
+    cep: { type: String, required: true },
 
-    // detalhes
-    vagas: { type: Number, required: true },
-    suites: { type: Number, required: true },
-    quartos: { type: Number, required: true },
-    banheiros: { type: Number, required: true },
+    valorvenda: { type: String, required: true },
+    valorlocacao: { type: String, required: true },
+    valorcondominio: { type: String, required: true },
+    condicaoiptu: { type: String, required: true },
 
-    valorvenda: { type: Number, required: true },
-    valorlocacao: { type: Number, required: true },
-    valorcondominio: { type: Number, required: true },
-    condicaopagamentoiptu: { type: String, required: true }, // anual, mensal, x.
+    documentocartorio: { type: String },
+    matricula: { type: String },
+    cartoriocidade: { type: String },
+    cartorionumero: { type: String },
+    iptunumero: { type: String },
 
-    areatotal: { type: Number, required: true },
-    areautil: { type: Number, required: true },
-    areamedidafrente: { type: Number, required: true },
-    areamedidalateral: { type: Number, required: true },
-    areatopografia: { type: String, required: true }, // aclive, declive, x.
-    andar: { type: Number, required: false, default: 0 },
+    medidatotal: { type: String },
+    medidaconstruida: { type: String },
+    medidautil: { type: String },
+    medidafrente: { type: String },
+    medidalateral: { type: String },
+    medidafundos: { type: String },
+    medidatopografia: { type: String },
 
-    salaestar: { type: Boolean, required: false, default: false },
-    escritorio: { type: Boolean, required: false, default: false },
-    piscina: { type: Boolean, required: false, default: false },
-    churrasqueira: { type: Boolean, required: false, default: false },
-    tipogaragem: { type: String, required: true }, // fixa, livre (select options)
-    tipovagas: { type: String, required: false, default: "Fixa" },
+    dormitorios: { type: String },
+    suites: { type: String },
+    banheiros: { type: String },
+    vagas: { type: String },
+    tipogaragem: { type: String },
 
-    finalidade: { type: String, default: null }, // venda, locacao, venda/locacao (oi?)
-    categoria: { type: String, default: null }, // residencial, comercial, bla bla bla.
-    subcategoria: { type: String, default: null }, // apartamento, casa
-    condominio: { type: Boolean, required: false, default: false }, // ainda nao entendi se isso eh um boolean ou uma string
-    andar: { type: Number, default: 1 },
+    piscina: { type: Boolean, default: false },
+    churrasqueira: { type: Boolean, default: false },
+    salaestar: { type: Boolean, default: false },
+    escritorio: { type: Boolean, default: false },
 
-    datacadastro: { type: String, required: true },
-    agendamentos: { type: Array, default: [] } // tenso... mas eh o jeito.
+    descricao: { type: String }
+
 })
 
 let Imovel = mongoose.model("Imovel", ImovelSchema)

@@ -1,0 +1,22 @@
+include ./estrutura.preferencias.pug
+body
+    include ./estrutura.menulateral.pug
+    #corpoconteudo
+        .cabecalho
+            a(href="./pagina-inicial" class="logo")
+                img(src=`${configuracoes.servidor.logo}`)
+            form(action="/imoveis/api/buscar" method="post")
+                input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
+
+        .imovel-cadastro
+            form(action="/imoveis/api/edicao/chaves/principal" method="post")
+                .titulo Local das chaves
+                a(href=`/proprietario/meus-imoveis/chaves?imovel=${valores.identificador}`) Editar
+
+                .titulo Local das chaves
+                    #{valores.localchaves}
+            //- aqui eh pra mostrar o que ja ta setado.
+            
+
+script(src="/jquery-3.3.1.js")
+script(src="/jquery.mask.js")

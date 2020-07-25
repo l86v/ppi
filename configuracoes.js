@@ -107,6 +107,10 @@ module.exports.mensagens = (codigo) => {
         case "Ca7": mensagem = "A solicitação de análise não pôde ser cadastrada."; break;
         case "Ca8": mensagem = "É necessário selecionar ao menos uma imobiliária para a análise."; break;
         case "Ca9": mensagem = "O cadastro da sua imobiliária foi realizado com sucesso! Faça login para começar."; break;
+        case "Ca10": mensagem = "O cadastro do local de chaves foi realizado."; break;
+        case "Ca11": mensagem = "O local de chaves já foi cadastrado anteriormente."; break;
+        case "Ca12": mensagem = "O cadastro do local de chaves não pôde ser realizado."; break;
+
 
         // edição
         case "Ed0": mensagem = "Não foi possível editar as informações."; break;

@@ -18,12 +18,16 @@ html(lang="br")
             .alinhamento
                 #tituloarea
                     | Proprietário
+                br
+                if pagina.mensagem != null
+                    .mensagemimportante #{pagina.mensagem}
+                br
                 #acesso
                     #login
                         #textointerno Já sou cliente
-                        form(action="./login" method="post")
-                            input(type="email" name="email" placeholder="E-mail" required autocomplete="off" autofocus)
-                            input(type="password" name="senha" placeholder="Senha" required autocomplete="off")
+                        form(action="/proprietario/api/web/login" method="post")
+                            input(type="email" name="email" placeholder="E-mail" required autocomplete="off" autofocus value="lucas86vilela@gmail.com")
+                            input(type="password" name="senha" placeholder="Senha" required autocomplete="off" value="senha1234")
                             input(type="submit" value="Entrar")
                             a(href="./esqueci-minha-senha") Esqueceu sua senha?
                     #redirecionar

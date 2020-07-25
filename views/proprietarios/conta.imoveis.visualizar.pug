@@ -8,106 +8,116 @@ body
             form(action="/imoveis/api/buscar" method="post")
                 input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
 
-        //- :: aqui mesmo que eu to.
-        .imovel-visualizar 
-            .cabecalho
-                .imagem
-                    img(src="https://wallpapercave.com/wp/wp4243614.jpg" alt="")
-            .detalhes
-                .primarios
-                    .valor R$ 62.178
-                    .compartilhar
+        if imovel != undefined
+            .imovel-visualizar 
+                .cabecalho
+                    .imagem
+                        if imovel.foto === undefined && imovel.foto != null
+                            img(src="https://wallpapercave.com/wp/wp4243614.jpg")
+                        else
+                            img(src=`${imovel.foto}`)
+                .detalhes
+                    .primarios
+                        .valor #{imovel.valorvendaformatado}
+                        .compartilhar
+                            a(href="")
+                                i(class="fas fa-share-alt")
+                        .identificador #{imovel.identificador}
+
+                    .secundarios
+                        .endereco  
+                            i(class="fas fa-map-marker")
+                            span #{imovel.logradouro}, #{imovel.numero} - #{imovel.bairro}, #{imovel.cidade} - #{imovel.estado}, #{imovel.cep}
+                        .grade
+                            .dado(title="Metros quadrados")
+                                i(class="fas fa-ruler")
+                                span #{imovel.medidatotal} m²
+                            .dado(title="Quartos & suítes de solteiro")
+                                i(class="fas fa-bed")
+                                span #{imovel.dormitorios} #{imovel.dormitorios === "1" ? "quarto" : "quartos"} 
+                                span #{imovel.banheiros} #{imovel.banheiros === "1" ? "banheiro" : "banheiros"} 
+                            .dado(title="Quartos & suítes de casal")
+                                i(class="fas fa-shower")
+                                span #{imovel.suites} #{imovel.suites === "1" ? "suíte" : "suítes"} 
+                            .dado(title="Vagas na garagem")
+                                i(class="fas fa-car")
+                                span #{imovel.vagas}  #{imovel.vagas === "1" ? "vaga" : "vagas"} 
+
+                    .terciarios
+                        a(href="") Atividades
+                        a(href="") Imobiliárias
+                        a(href=`/proprietario/meus-imoveis/chaves?imovel=${imovel.identificador}`) Chaves
                         a(href="")
-                            i(class="fas fa-share-alt")
-                    .identificador CA0001
+                            i(class="far fa-edit")
+                            | Editar anúncio
+                        a(href="") 
+                            i(class="fas fa-check")
+                            | Alterar status
+                        a(href="") 
+                            i(class="far fa-clone")
+                            | Duplicar anúncio
+                        a(href="") 
+                            i(class="fas fa-ban")
+                            | Excluir anúncio
+                .descricao
+                    .titulo Descrição:
+                    .texto
+                        | #{imovel.descricao}
 
-                .secundarios
-                    .endereco  
-                        i(class="fas fa-map-marker")
-                        span Rua Luiz Zilli, 440 - Santa Quitéria, Curitiba - PR, 81220-100
-                    .grade
-                        .dado(title="Metros quadrados")
-                            i(class="fas fa-ruler")
-                            span 200 m²
-                        .dado(title="Quartos & suítes de solteiro")
-                            i(class="fas fa-bed")
-                            span 2 suítes
-                            span 4 banheiros
-                        .dado(title="Quartos & suítes de casal")
-                            i(class="fas fa-shower")
-                            span 1 suíte
-                            span 1 banheiro
-                        .dado(title="Vagas na garagem")
-                            i(class="fas fa-car")
-                            span 2 vagas
+                    .listas 
+                        .esquerda
+                            .titulo Descrição técnica:
+                            .lista
+                                .linha
+                                    .tipo Venda
+                                    .dado #{imovel.valorvenda}
+                                .linha
+                                    .tipo m² venda
+                                    .dado -- desenvolver --
+                                .linha
+                                    .tipo m²
+                                    .dado #{imovel.medidatotal} m²
+                                .linha
+                                    .tipo Condomínio mensal
+                                    .dado #{imovel.condominio === true ? "sim" : "não contribui"} 
 
-                .terciarios
-                    a(href="") Atividades
-                    a(href="") Imobiliárias
-                    a(href="") Chaves
-                    a(href="")
-                        i(class="far fa-edit")
-                        | Editar anúncio
-                    a(href="") 
-                        i(class="fas fa-check")
-                        | Alterar status
-                    a(href="") 
-                        i(class="far fa-clone")
-                        | Duplicar anúncio
-                    a(href="") 
-                        i(class="fas fa-ban")
-                        | Excluir anúncio
-            .descricao
-                .titulo Descrição:
-                .texto
-                    | Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur ut quod quis, voluptas sapiente quae voluptates doloremque at officia adipisci excepturi dolore. Repellat, exercitationem aperiam? Sed ipsa debitis nulla eveniet.
+                            .titulo Características:
+                            .lista
+                                .linha
+                                    .tipo Área total
+                                    .dado #{imovel.medidatotal} m²
+                                .linha
+                                    .tipo Área construída
+                                    .dado #{imovel.medidaconstruida} m²
 
-                .listas 
-                    .esquerda
-                        .titulo Descrição técnica:
-                        .lista
-                            .linha
-                                .tipo Venda
-                                .dado R$ 62.178
-                            .linha
-                                .tipo m² venda
-                                .dado R$ 100
-                            .linha
-                                .tipo m²
-                                .dado 230 m²
-                            .linha
-                                .tipo Condomínio mensal
-                                .dado não contribui
-
-                        .titulo Características:
-                        .lista
-                            .linha
-                                .tipo Área total
-                                .dado 200 m²
-                            .linha
-                                .tipo Área construída
-                                .dado 150 m²
-
-                    .direita
-                        .titulo Lazer:
-                        .lista
-                            .linha
-                                .tipo Piscina
-                                .dado 
-                                    i(class="fas fa-check")
-                            .linha
-                                .tipo Churrasqueira
-                                .dado 
-                                    i(class="fas fa-check")
-                        .titulo Social:
-                        .lista
-                            .linha
-                                .tipo Sala de estar
-                                .dado 
-                                    i(class="fas fa-check")
-                            .linha
-                                .tipo Escritório
-                                .dado 
-                                    i(class="fas fa-check")
-                .mapa
-                    iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.605436801308!2d-49.29042568544024!3d-25.45145153997224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce38147af8137%3A0x20ed06402dcd6e89!2sPosto%20Pinheiro!5e0!3m2!1spt-BR!2sbr!4v1592921306277!5m2!1spt-BR!2sbr" width="100%" height="430" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0")
+                        .direita
+                            .grupoopcional
+                                .titulo Lazer:
+                                .lista
+                                    if imovel.piscina === true
+                                        .linha
+                                            .tipo Piscina
+                                            .dado 
+                                                i(class="fas fa-check")
+                                    if imovel.churrasqueira === true
+                                        .linha
+                                            .tipo Churrasqueira
+                                            .dado 
+                                                i(class="fas fa-check")
+                            .grupoopcional
+                                .titulo Social:
+                                .lista
+                                    if imovel.salaestar === true
+                                        .linha
+                                            .tipo Sala de estar
+                                            .dado 
+                                                i(class="fas fa-check")
+                                    if imovel.escritorio === true
+                                        .linha
+                                            .tipo Escritório
+                                            .dado 
+                                                i(class="fas fa-check")
+                    .mapa
+                        iframe(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.605436801308!2d-49.29042568544024!3d-25.45145153997224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dce38147af8137%3A0x20ed06402dcd6e89!2sPosto%20Pinheiro!5e0!3m2!1spt-BR!2sbr!4v1592921306277!5m2!1spt-BR!2sbr" width="100%" height="430" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0")
+        else
+            .mensagemimportante Houve um erro ao tentar encontrar dados sobre o imóvel.

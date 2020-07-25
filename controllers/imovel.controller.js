@@ -6,6 +6,7 @@ let formidable = require("formidable")
 let sizeOf = require("image-size")
 let jimp = require("jimp")
 let fs = require("fs")
+const { config } = require("process")
 
 module.exports.api_tudo = (req, res) => {
     let selecao = {
@@ -29,75 +30,75 @@ module.exports.api_tudo = (req, res) => {
 module.exports.api_cadastro = (req, res) => {
     let corpo = req.body
 
-    res.send(corpo)
+    Imovel.countDocuments((erros, numero) => {
+        if (erros) {
+            res.json({
+                erro: true,
+                mensagem: configuracoes.mensagens("Er0"),
+                acao: false,
+                dados: null
+            })
+        }
+        else {
+            let novoimovel = new Imovel({
+                identificador: Number(numero + 1),
+                proprietario: corpo.proprietario,
+                documentocartorio: corpo.documentocartorio,
+                matricula: Number(configuracoes.numeros(corpo.matricula)),
+                descricao: String(corpo.descricao).trim(),
 
-    // Imovel.countDocuments((erros, numero) => {
-    //     if (erros) {
-    //         res.json({
-    //             erro: true,
-    //             mensagem: configuracoes.mensagens("Er0"),
-    //             acao: false,
-    //             dados: null
-    //         })
-    //     }
-    //     else {
-    //         let novoimovel = new Imovel({
-    //             identificador: Number(numero + 1),
-    //             proprietario: corpo.proprietario,
-    //             titulo: String(corpo.titulo).trim(),
-    //             descricao: String(corpo.descricao).trim(),
-    //             matriculanumero: Number(configuracoes.numeros(corpo.matriculanumero)),
-    //             matriculacartorio: String(corpo.matriculacartorio).trim(),
+                cep: configuracoes.numeros(corpo.cep),
+                logradouro: String(corpo.logradouro).trim(),
+                bairro: String(corpo.bairro).trim(),
+                cidade: String(corpo.cidade).trim(),
+                estado: corpo.estado,
+                numero: corpo.numero,
+                complemento: (corpo.complemento != undefined && corpo.complemento != null) ? configuracoes.numeros(corpo.complemento) : null,
 
-    //             cep: Number(configuracoes.numeros(corpo.cep)),
-    //             logradouro: String(corpo.logradouro).trim(),
-    //             bairro: String(corpo.bairro).trim(),
-    //             cidade: String(corpo.cidade).trim(),
-    //             estado: corpo.estado,
-    //             numero: corpo.numero,
-    //             complemento: (corpo.complemento != undefined && corpo.complemento != null) ? configuracoes.numeros(corpo.complemento) : null,
+                dormitorios: configuracoes.numeros(corpo.dormitorios),
+                vagas: configuracoes.numeros(corpo.vagas),
+                suites: configuracoes.numeros(corpo.suites),
+                banheiros: configuracoes.numeros(corpo.banheiros),
 
-    //             vagas: Number(configuracoes.numeros(corpo.vagas)),
-    //             suites: Number(configuracoes.numeros(corpo.suites)),
-    //             quartos: Number(configuracoes.numeros(corpo.quartos)),
-    //             banheiros: Number(configuracoes.numeros(corpo.banheiros)),
+                valorvenda: configuracoes.numeros(corpo.valorvenda),
+                valorlocacao: configuracoes.numeros(corpo.valorlocacao),
+                valorcondominio: configuracoes.numeros(corpo.valorcondominio),
+                condicaoiptu: String(corpo.condicaoiptu).trim(),
 
-    //             valorvenda: Number(configuracoes.numeros(corpo.valorvenda)),
-    //             valorlocacao: Number(configuracoes.numeros(corpo.valorlocacao)),
-    //             valorcondominio: Number(configuracoes.numeros(corpo.valorcondominio)),
-    //             condicaopagamentoiptu: String(corpo.condicaopagamentoiptu).trim(),
+                medidatotal: configuracoes.numeros(corpo.medidatotal),
+                medidautil: configuracoes.numeros(corpo.medidautil),
+                medidafrente: configuracoes.numeros(corpo.medidafrente),
+                medidalateral: configuracoes.numeros(corpo.medidalateral),
+                medidafundos: configuracoes.numeros(corpo.medidafundos),
+                medidaconstruida: configuracoes.numeros(corpo.medidaconstruida),
+                areatopografia: String(corpo.areatopografia).trim(),
 
-    //             areatotal: Number(configuracoes.numeros(corpo.areatotal)),
-    //             areautil: Number(configuracoes.numeros(corpo.areautil)),
-    //             areamedidafrente: Number(configuracoes.numeros(corpo.areamedidafrente)),
-    //             areamedidalateral: Number(configuracoes.numeros(corpo.areamedidalateral)),
-    //             areatopografia: String(corpo.areatopografia).trim(),
+                finalidade: corpo.finalidade,
+                categoria: corpo.categoria,
+                subcategoria: corpo.subcategoria,
+                condominio: (corpo.condominio === "sim") ? true : false,
+                andar: Number(configuracoes.numeros(corpo.andar)),
 
-    //             salaestar: (corpo.salaestar === "Sim") ? true : false,
-    //             escritorio: (corpo.escritorio === "Sim") ? true : false,
-    //             piscina: (corpo.piscina === "Sim") ? true : false,
-    //             churrasqueira: (corpo.churrasqueira === "Sim") ? true : false,
-    //             tipogaragem: corpo.tipogaragem,
+                piscina: (corpo.piscina === "sim") ? true : false,
+                salaestar: (corpo.salaestar === "sim") ? true : false,
+                escritorio: (corpo.escritorio === "sim") ? true : false,
+                churrasqueira: (corpo.churrasqueira === "sim") ? true : false,
 
-    //             finalidade: corpo.finalidade,
-    //             categoria: corpo.categoria,
-    //             subcategoria: corpo.subcategoria,
-    //             condominio: (corpo.condominio === "Sim") ? true : false,
-    //             andar: Number(configuracoes.numeros(corpo.andar)),
+                datacadastro: configuracoes.agora("completo")
+            })
 
-    //             datacadastro: configuracoes.agora("completo")
-    //         })
+            console.log({ novoimovel })
 
-    //         Imovel.create(novoimovel, (erros, dados) => {
-    //             res.json({
-    //                 erro: (erros != null && erros != undefined) ? true : false,
-    //                 mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er4") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Ca4") : configuracoes.mensagens("Ca0"),
-    //                 acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
-    //                 valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? novoimovel._id : null
-    //             })
-    //         })
-    //     }
-    // })
+            Imovel.create(novoimovel, (erros, dados) => {
+                res.json({
+                    erro: (erros != null && erros != undefined) ? true : false,
+                    mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er4") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Ca4") : configuracoes.mensagens("Ca0"),
+                    acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
+                    valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? novoimovel._id : null
+                })
+            })
+        }
+    })
 }
 
 module.exports.api_visualizar_via_agencia = (req, res) => {
@@ -175,8 +176,14 @@ module.exports.api_visualizar_via_agencia = (req, res) => {
 
 module.exports.api_visualizar_via_simples = (req, res) => {
     let imovel = req.query.imovel
+    let proprietario = req.query.proprietario
 
-    Imovel.findById(imovel).lean().exec((erros, dados) => {
+    Imovel.findOne({ identificador: imovel, proprietario: proprietario }).lean().exec((erros, dados) => {
+        if (dados != undefined) {
+            dados.foto = dados.fotos[0]
+            dados.valorvendaformatado = configuracoes.conversao_valores(dados.valorvenda, "dinheiro")
+        }
+
         res.json({
             erro: (erros != null && erros != undefined) ? true : false,
             mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er0") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Da1") : configuracoes.mensagens("Da0"),
@@ -374,6 +381,30 @@ module.exports.api_edicao_fotos = (req, res) => {
                     valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? "editado" : "naoeditado"
                 })
             })
+        })
+    })
+}
+
+module.exports.api_edicao_chaves_principal = (req, res) => {
+    res.json(req.body)
+}
+
+module.exports.api_proprietario_tudo = (req, res) => {
+    let proprietario = req.query.proprietario
+
+    Imovel.find({ proprietario: proprietario }).lean().exec((erros, dados) => {
+        if (dados != null) {
+            dados.forEach(item => {
+                item.foto = (item.fotos != []) ? (item.fotos[0]) : null
+                return item
+            })
+        }
+
+        res.json({
+            erro: (erros != null && erros != undefined) ? true : false,
+            mensagem: (erros != null && erros != undefined) ? configuracoes.mensagens("Er0") : (dados != null && dados != undefined && dados.length != 0) ? configuracoes.mensagens("Da1") : configuracoes.mensagens("Da0"),
+            acao: (erros != null && erros != undefined) ? false : (dados != null && dados != undefined && dados.length != 0) ? true : false,
+            valores: (erros != null && erros != undefined) ? erros : (dados != null && dados != undefined && dados.length != 0) ? dados : null
         })
     })
 }

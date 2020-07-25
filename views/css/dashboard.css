@@ -550,3 +550,59 @@ html, body {
     resize: none;
     -webkit-appearance: none;
 }
+
+.dias {
+    display: block;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#cb-domingo, #cb-segunda, #cb-terca, #cb-quarta, #cb-quinta, #cb-sexta, #cb-sabado {
+    margin-left: 4em;
+    margin-right: 4em;
+    visibility: hidden;
+}
+
+input#cb-domingo::after, input#cb-segunda::after, input#cb-terca::after, input#cb-quarta::after, input#cb-quinta::after, input#cb-sexta::after, input#cb-sabado::after {
+    visibility: visible;
+    color: rgb(82, 82, 78);
+    background: rgb(211, 211, 211);
+    padding: 2em;
+    border-radius: 9999em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    font-size: 1.5em;
+}
+
+input#cb-domingo::after {
+    content: "D";
+}
+
+input#cb-segunda::after {
+    content: "S";
+}
+
+input#cb-terca::after {
+    content: "T";
+}
+
+input#cb-quarta::after {
+    content: "Q";
+}
+
+input#cb-quinta::after {
+    content: "Q";
+}
+
+input#cb-sexta::after {
+    content: "S";
+}
+
+input#cb-sabado::after {
+    content: "S";
+}
+
+input#cb-domingo:checked::after, input#cb-segunda:checked::after, input#cb-terca:checked::after, input#cb-quarta:checked::after, input#cb-quinta:checked::after, input#cb-sexta:checked::after, input#cb-sabado:checked::after {
+    color: white;
+    background: rgb(32, 88, 145);
+}

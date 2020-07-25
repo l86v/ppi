@@ -7,58 +7,36 @@ body
                 img(src=`${configuracoes.servidor.logo}`)
             form(action="/imoveis/api/buscar" method="post")
                 input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
-        .imoveis
-            a(href=`./meus-imoveis/visualizar?imovel=CA0001` id="imovel")
-                .imagem
-                    img(src="https://wallpapercave.com/wp/wp4243614.jpg" alt="")
-                .detalhes
-                    .primarios
-                        .valor R$ 62.178
-                        .identificador CA0001
-                    .secundarios
-                        .endereco  
-                            i(class="fas fa-map-marker")
-                            span Rua Luiz Zilli, 440 - Santa Quitéria, Curitiba - PR, 81220-100
-                        .grade
-                            .dado(title="Metros quadrados")
-                                i(class="fas fa-ruler")
-                                span 200 m²
-                            .dado(title="Quartos & suítes de solteiro")
-                                i(class="fas fa-bed")
-                                span 2 suítes
-                                span 4 banheiros
-                            .dado(title="Quartos & suítes de casal")
-                                i(class="fas fa-shower")
-                                span 1 suíte
-                                span 1 banheiro
-                            .dado(title="Vagas na garagem")
-                                i(class="fas fa-car")
-                                span 2 vagas
-            
-            #imovel
-                .imagem
-                    img(src="http://data.rsko.cz/storage/201209291352_P9260137.jpg" alt="")
-                .detalhes
-                    .primarios
-                        .valor R$ 500.000
-                        .identificador CA0001
-                    .secundarios
-                        .endereco  
-                            i(class="fas fa-map-marker")
-                            span Rua Luiz Zilli, 440 - Santa Quitéria, Curitiba - PR, 81220-100
-                        .grade
-                            .dado(title="Metros quadrados")
-                                i(class="fas fa-ruler")
-                                span 200 m²
-                            .dado(title="Quartos & suítes de solteiro")
-                                i(class="fas fa-bed")
-                                span 2 suítes
-                                span 4 banheiros
-                            .dado(title="Quartos & suítes de casal")
-                                i(class="fas fa-shower")
-                                span 1 suíte
-                                span 1 banheiro
-                            .dado(title="Vagas na garagem")
-                                i(class="fas fa-car")
-                                span 2 vagas
-            
+        if valores != null
+            .imoveis
+                for val in valores
+                    a(href=`./meus-imoveis/visualizar?imovel=${val['identificador']}` id="imovel")
+                        .imagem
+                            if val['foto'] === null
+                                img(src="https://wallpapercave.com/wp/wp4243614.jpg")
+                            else
+                                img(src=`${val['foto']}`)
+                        .detalhes
+                            .primarios
+                                .valor #{val['valorvenda']}
+                                .identificador #{val['identificador']}
+                            .secundarios
+                                .endereco  
+                                    i(class="fas fa-map-marker")
+                                    span #{val['logradouro']}, #{val['numero']} - #{val['bairro']}, #{val['cidade']} - #{val['estado']}, #{val['cep']}
+                                .grade
+                                    .dado(title="Metros quadrados")
+                                        i(class="fas fa-ruler")
+                                        span #{val['medidatotal']} m²
+                                    .dado(title="Quartos & suítes de solteiro")
+                                        i(class="fas fa-bed")
+                                        span #{val['dormitorios']} #{val['dormitorios'] === "1" ? "quarto" : "quartos"} 
+                                        span #{val['banheiros']} #{val['banheiros'] === "1" ? "banheiro" : "banheiros"} 
+                                    .dado(title="Quartos & suítes de casal")
+                                        i(class="fas fa-shower")
+                                        span #{val['suites']} #{val['suites'] === "1" ? "suíte" : "suítes"} 
+                                    .dado(title="Vagas na garagem")
+                                        i(class="fas fa-car")
+                                        span #{val['vagas']} #{val['vagas'] === "1" ? "vaga" : "vagas"} 
+        else
+            .mensagemimportante Não há nenhum imóvel cadastrado atualmente. 

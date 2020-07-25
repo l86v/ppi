@@ -8,6 +8,14 @@ let jimp = require("jimp")
 let fs = require("fs")
 let request = require("request")
 let pasta = "proprietarios"
+let session = require("express-session")
+let info_sessao = {
+    "identificador": 1,
+    "nome": 1,
+    "foto": 1,
+    "email": 1
+}
+
 
 module.exports.api_tudo = (req, res) => {
     let selecao = {
@@ -131,6 +139,69 @@ module.exports.api_login = (req, res) => {
                     acao: false,
                     dados: null
                 })
+            }
+        }
+    })
+}
+
+module.exports.api_web_login = (req, res) => {
+    let email = req.body.email
+    let senha = req.body.senha
+
+    let selecao = {
+        "_id": 1,
+        "email": 1,
+        "senha": 1
+    }
+
+    console.log("acesso...",)
+
+    Proprietario.findOne({ email: email }).select(selecao).lean().exec((erros, existe) => {
+        console.log("testando...")
+        if (erros) {
+            res.json({
+                erro: true,
+                mensagem: configuracoes.mensagens("Er0"),
+                acao: false,
+                dados: erros
+            })
+            console.log(`[s] [proprietario] [login] [erro] [0] ${erros}`)
+        }
+        else {
+            if (existe) {
+                console.log("existe.")
+                bcrypt.compare(senha, existe.senha, (erros, resultado) => {
+                    if (erros) {
+                        console.log(`[s] [proprietario] [login] [erro] [1] ${erros}`)
+                        res.redirect(`/${pasta}/login?mensagem=0`)
+                    }
+                    else {
+                        if (resultado) {
+                            console.log("opa.")
+                            req.session.id_sessao_proprietario = existe._id
+                            session.id_sessao_proprietario = existe._id
+                            console.log(`[s] [proprietario] [login] [sucesso] ${session.id_sessao_proprietario}`)
+                            res.redirect(`/${pasta}/meus-imoveis`)
+                        }
+                        else {
+                            console.log(`[s] [proprietario] [login] [erro] [2]`)
+                            res.redirect(`/${pasta}/login?mensagem=1`)
+
+                        }
+                    }
+                })
+            }
+            else {
+                console.log("nao existe.")
+                // res.json({
+                //     erro: false,
+                //     mensagem: configuracoes.mensagens("Lo0"),
+                //     acao: false,
+                //     dados: null
+                // })
+                res.redirect(`/${pasta}/login?mensagem=2`)
+
+                console.log(`[s] [proprietario] [login] [erro] [3]`)
             }
         }
     })
@@ -621,7 +692,8 @@ module.exports.pug_login = (req, res) => {
         configuracoes: configuracoes,
         pagina: {
             nome: "proprietario/login",
-            titulo: `Login | ${configuracoes.servidor.titulo}`
+            titulo: `Login | ${configuracoes.servidor.titulo}`,
+            mensagem: (req.query.mensagem != undefined && req.query.mensagem != null) ? req.query.mensagem === "0" ? "Não foi possível realizar o login devido a um erro." : req.query.mensagem === "1" ? "A senha inserida está incorreta." : req.query.mensagem === "2" ? "O e-mail inserido no login não existe no banco de dados." : req.query.mensagem === "3" ? "Favor realizar o login novamente." : null : null
         }
     }
 
@@ -644,166 +716,213 @@ module.exports.pug_cadastro = (req, res) => {
 module.exports.pug_index = (req, res) => {
     let arquivo = `${pasta}/conta.index.pug`
 
-    // if (session.id_sessao_cliente != undefined && session.id_sessao_cliente != null) {
-    //     Proprietario.findById(session.id_sessao_proprietario).lean().exec((erros, sessao) => {
-    //         if (erros != undefined && dados === null) {
-    //             res.redirect(`/${pasta}/login?mensagem=3`)
-    //         }
-    //         else {
+    if (session.id_sessao_proprietario != undefined && session.id_sessao_proprietario != null) {
+        Proprietario.findById(session.id_sessao_proprietario).select(info_sessao).lean().exec((erros, sessao) => {
+            if (erros === undefined && dados === null) {
+                console.log("oi")
+                res.redirect(`/${pasta}/login?mensagem=3`)
+            }
+            else {
+                console.log(`[s] [proprietario] [login] [acesso] [${arquivo}] ${session.id_sessao_proprietario}`)
 
-    let horariovisitas = [
-        { "horario": "08:00:00", visitas: [] },
-        { "horario": "09:00:00", visitas: [] },
-        { "horario": "10:00:00", visitas: [] },
-        { "horario": "11:00:00", visitas: [] },
-        { "horario": "12:00:00", visitas: [] },
-        { "horario": "13:00:00", visitas: [] },
-        { "horario": "14:00:00", visitas: [] },
-        { "horario": "15:00:00", visitas: [] },
-        { "horario": "16:00:00", visitas: [] },
-        { "horario": "17:00:00", visitas: [] },
-        { "horario": "18:00:00", visitas: [] },
-        { "horario": "19:00:00", visitas: [] },
-        { "horario": "20:00:00", visitas: [] }
-    ]
+                // let horariovisitas = [
+                //     { "horario": "08:00:00", visitas: [] },
+                //     { "horario": "09:00:00", visitas: [] },
+                //     { "horario": "10:00:00", visitas: [] },
+                //     { "horario": "11:00:00", visitas: [] },
+                //     { "horario": "12:00:00", visitas: [] },
+                //     { "horario": "13:00:00", visitas: [] },
+                //     { "horario": "14:00:00", visitas: [] },
+                //     { "horario": "15:00:00", visitas: [] },
+                //     { "horario": "16:00:00", visitas: [] },
+                //     { "horario": "17:00:00", visitas: [] },
+                //     { "horario": "18:00:00", visitas: [] },
+                //     { "horario": "19:00:00", visitas: [] },
+                //     { "horario": "20:00:00", visitas: [] }
+                // ]
 
-    let visitas = [
-        { id: 'abc12', imovel: "CA0001", dataagendadaformatada: "08/06/2020-14:00:00" },
-        { id: 'abc18', imovel: "CA0001", dataagendadaformatada: "08/06/2020-18:00:00" },
-        { id: 'fge03', imovel: "CA0001", dataagendadaformatada: "08/06/2020-08:00:00" },
-        { id: 'def93', imovel: "LO3002", dataagendadaformatada: "08/06/2020-13:00:00" },
-        { id: 'fna08', imovel: "LO3002", dataagendadaformatada: "09/06/2020-13:00:00" }
-    ]
+                // let visitas = [
+                //     { id: 'abc12', imovel: "CA0001", dataagendadaformatada: "08/06/2020-14:00:00" },
+                //     { id: 'abc18', imovel: "CA0001", dataagendadaformatada: "08/06/2020-18:00:00" },
+                //     { id: 'fge03', imovel: "CA0001", dataagendadaformatada: "08/06/2020-08:00:00" },
+                //     { id: 'def93', imovel: "LO3002", dataagendadaformatada: "08/06/2020-13:00:00" },
+                //     { id: 'fna08', imovel: "LO3002", dataagendadaformatada: "09/06/2020-13:00:00" }
+                // ]
 
-    let dia = "08/06/2020"
+                // let dia = "08/06/2020"
 
-    visitas.forEach(registro => {
-        return registro.adicionado = false
-    })
+                // visitas.forEach(registro => {
+                //     return registro.adicionado = false
+                // })
 
-    let visitas_dia_unico = horariovisitas.forEach(horario => {
-        visitas.forEach(visita => {
-            if (visita.adicionado === false) {
-                if (visita.dataagendadaformatada.includes(dia) === true) {
-                    if ((visita.dataagendadaformatada).includes(horario.horario) === true) {
-                        horario.visitas.push(visita)
-                        return visita.adicionado = true
-                    }
+                // let visitas_dia_unico = horariovisitas.forEach(horario => {
+                //     visitas.forEach(visita => {
+                //         if (visita.adicionado === false) {
+                //             if (visita.dataagendadaformatada.includes(dia) === true) {
+                //                 if ((visita.dataagendadaformatada).includes(horario.horario) === true) {
+                //                     horario.visitas.push(visita)
+                //                     return visita.adicionado = true
+                //                 }
+                //             }
+                //             else {
+                //                 return visita.adicionado = true
+                //             }
+                //         }
+                //     })
+                // })
+
+                let pacote = {
+                    configuracoes: configuracoes,
+                    pagina: {
+                        nome: "proprietario/index",
+                        titulo: `Página inicial | ${configuracoes.servidor.titulo}`
+                    },
+                    sessao: sessao
+                    // agenda: horariovisitas
                 }
-                else {
-                    return visita.adicionado = true
-                }
+                res.render(arquivo, pacote)
             }
         })
-    })
-
-    console.log(horariovisitas)
-
-    let pacote = {
-        configuracoes: configuracoes,
-        pagina: {
-            nome: "proprietario/index",
-            titulo: `Página inicial | ${configuracoes.servidor.titulo}`
-        },
-        // sessao: sessao
-        sessao: {
-            nome: configuracoes.padroes.usuario.nome,
-            foto: configuracoes.padroes.usuario.foto
-        },
-        agenda: horariovisitas
     }
-
-    res.render(arquivo, pacote)
-    // }
-    // })
-    // }
+    else {
+        res.redirect(`/${pasta}/login?mensagem=3`)
+    }
 }
 
 module.exports.pug_imoveis_todos = (req, res) => {
     let arquivo = `${pasta}/conta.imoveis.todos.pug`
 
-    // if (session.id_sessao_cliente != undefined && session.id_sessao_cliente != null) {
-    //     Proprietario.findById(session.id_sessao_proprietario).lean().exec((erros, sessao) => {
-    //         if (erros != undefined && dados === null) {
-    //             res.redirect(`/${pasta}/login?mensagem=3`)
-    //         }
-    //         else {
-    let pacote = {
-        configuracoes: configuracoes,
-        pagina: {
-            nome: "proprietario/imoveis-todos",
-            titulo: `Meus imóveis | ${configuracoes.servidor.titulo}`
-        },
-        // sessao: sessao
-        sessao: {
-            nome: configuracoes.padroes.usuario.nome,
-            foto: configuracoes.padroes.usuario.foto
-        }
-    }
+    if (session.id_sessao_proprietario != undefined && session.id_sessao_proprietario != null) {
+        Proprietario.findById(session.id_sessao_proprietario).select(info_sessao).lean().exec((erros, sessao) => {
 
-    res.render(arquivo, pacote)
-    // }
-    // })
-    // }
+            if (erros != undefined && dados === null) {
+                res.redirect(`/${pasta}/login?mensagem=3`)
+            }
+            else {
+                request.get({ url: `${configuracoes.servidor.endereco}:${configuracoes.servidor.porta}/imovel/api/proprietario/tudo?proprietario=${session.id_sessao_proprietario}`, json: true }, (erros, dados) => {
+
+                    imoveis = (dados["body"]["valores"] != null) ? dados["body"]["valores"] : null
+
+                    if (imoveis != null) {
+                        imoveis.forEach(item => {
+                            item.foto = item.fotos[0]
+                            item.valorvenda = configuracoes.conversao_valores(Number(item.valorvenda), "dinheiro")
+                            item.cep = configuracoes.formatacao(item.cep, "cep")
+                            return item
+                        })
+                    }
+
+                    let pacote = {
+                        configuracoes: configuracoes,
+                        pagina: {
+                            nome: "proprietario/imoveis-todos",
+                            titulo: `Meus imóveis | ${configuracoes.servidor.titulo}`
+                        },
+                        sessao: sessao,
+                        valores: (erros != undefined) ? erros : (imoveis != null) ? imoveis : null
+                    }
+                    res.render(arquivo, pacote)
+
+                })
+            }
+        })
+    }
+    else {
+        res.redirect(`/${pasta}/login?mensagem=3`)
+    }
 }
 
-
-module.exports.pug_imoveis_visualizar = (req, res) => { // aqui mesmo que eu to.
+module.exports.pug_imoveis_visualizar = (req, res) => {
     let arquivo = `${pasta}/conta.imoveis.visualizar.pug`
-    // let imovel = req.query.imovel
+    let imovel = req.query.imovel
 
-    // if (session.id_sessao_cliente != undefined && session.id_sessao_cliente != null) {
-    //     Proprietario.findById(session.id_sessao_proprietario).lean().exec((erros, sessao) => {
-    //         if (erros != undefined && dados === null) {
-    //             res.redirect(`/${pasta}/login?mensagem=3`)
-    //         }
-    //         else {
-    // request.get({ url: `${configuracoes.servidor.endereco}:${configuracoes.servidor.porta}/imovel/api/visualizar/simples?imovel=${imovel}`, json: true }, (erros, dados) => {
-    let pacote = {
-        configuracoes: configuracoes,
-        pagina: {
-            nome: "proprietario/imoveis-todos",
-            titulo: `Visualizar imóvel | ${configuracoes.servidor.titulo}`
-        },
-        // sessao: sessao
-        sessao: {
-            nome: configuracoes.padroes.usuario.nome,
-            foto: configuracoes.padroes.usuario.foto
-        },
-        // imovel: (dados["body"]["erro"] === false) ? dados["body"]["valores"] : null
+    if (session.id_sessao_proprietario != undefined && session.id_sessao_proprietario != null) {
+        Proprietario.findById(session.id_sessao_proprietario).select(info_sessao).lean().exec((erros, sessao) => {
+            if (erros != undefined && dados === null) {
+                res.redirect(`/${pasta}/login?mensagem=3`)
+            }
+            else {
+                request.get({ url: `${configuracoes.servidor.endereco}:${configuracoes.servidor.porta}/imovel/api/visualizar/simples?imovel=${imovel}&proprietario=${session.id_sessao_proprietario}`, json: true }, (erros, dados) => {
+                    let pacote = {
+                        configuracoes: configuracoes,
+                        pagina: {
+                            nome: "proprietario/imoveis-todos",
+                            titulo: `Visualizar imóvel | ${configuracoes.servidor.titulo}`
+                        },
+                        sessao: sessao,
+                        imovel: (dados["body"]["erro"] === false) ? dados["body"]["valores"] : null
+                    }
+
+                    res.render(arquivo, pacote)
+                })
+            }
+        })
     }
-
-    res.render(arquivo, pacote)
-    // })
-    // }
-    // })
-    // }
+    else {
+        res.redirect(`/${pasta}/login?mensagem=3`)
+    }
 }
 
-module.exports.pug_imoveis_cadastro = (req, res) => { // aqui mesmo que eu to.
+module.exports.pug_imoveis_cadastro = (req, res) => {
     let arquivo = `${pasta}/conta.imoveis.cadastro.pug`
 
-    // if (session.id_sessao_cliente != undefined && session.id_sessao_cliente != null) {
-    //     Proprietario.findById(session.id_sessao_proprietario).lean().exec((erros, sessao) => {
-    //         if (erros != undefined && dados === null) {
-    //             res.redirect(`/${pasta}/login?mensagem=3`)
-    //         }
-    //         else {
-    let pacote = {
-        configuracoes: configuracoes,
-        pagina: {
-            nome: "proprietario/imoveis-cadastro",
-            titulo: `Cadastrar imóvel | ${configuracoes.servidor.titulo}`
-        },
-        // sessao: sessao
-        sessao: {
-            nome: configuracoes.padroes.usuario.nome,
-            foto: configuracoes.padroes.usuario.foto
-        },
-    }
+    if (session.id_sessao_proprietario != undefined && session.id_sessao_proprietario != null) {
+        Proprietario.findById(session.id_sessao_proprietario).select(info_sessao).lean().exec((erros, sessao) => {
+            if (erros != undefined && dados === null) {
+                res.redirect(`/${pasta}/login?mensagem=3`)
+            }
+            else {
+                let pacote = {
+                    configuracoes: configuracoes,
+                    pagina: {
+                        nome: "proprietario/imoveis-cadastro",
+                        titulo: `Cadastrar imóvel | ${configuracoes.servidor.titulo}`
+                    },
+                    sessao: sessao
+                }
 
-    res.render(arquivo, pacote)
-    // }
-    //     })
-    // }
+                res.render(arquivo, pacote)
+            }
+        })
+    }
+    else {
+        res.redirect(`/${pasta}/login?mensagem=3`)
+    }
+}
+
+module.exports.pug_imoveis_chaves_principal = (req, res) => { // aqui mesmo que eu to.
+    let arquivo = `${pasta}/conta.imoveis.chaves.principal.pug`
+    let imovel = req.query.imovel
+
+    if (session.id_sessao_proprietario != undefined && session.id_sessao_proprietario != null) {
+        Proprietario.findById(session.id_sessao_proprietario).select(info_sessao).lean().exec((erros, sessao) => {
+            if (erros != undefined && dados === null) {
+                res.redirect(`/${pasta}/login?mensagem=3`)
+            }
+            else {
+                request.get({ url: `${configuracoes.servidor.endereco}:${configuracoes.servidor.porta}/imovel/api/visualizar/simples?imovel=${imovel}&proprietario=${session.id_sessao_proprietario}`, json: true }, (erros, dados) => {
+
+                    imovel = (dados["body"]["valores"] != null) ? dados["body"]["valores"] : null
+
+                    let pacote = {
+                        configuracoes: configuracoes,
+                        pagina: {
+                            nome: "proprietario/imoveis-todos",
+                            titulo: `Local das chaves do imóvel | ${configuracoes.servidor.titulo}`
+                        },
+                        sessao: sessao,
+                        // imovel: (dados["body"]["erro"] === false) ? dados["body"]["valores"] : null,
+                        valores: (erros != undefined) ? erros : (imovel != null) ? imovel : null
+                    }
+
+                    console.log(pacote.valores)
+
+                    res.render(arquivo, pacote)
+                })
+            }
+        })
+    }
+    else {
+        res.redirect(`/${pasta}/login?mensagem=3`)
+    }
 }

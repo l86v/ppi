@@ -10,6 +10,7 @@ body
 
         .imovel-cadastro
             form(action="/imoveis/api/cadastro" method="post")
+                input(type="hidden" name="proprietario" value=`${sessao["_id"]}`)
                 .zona
                     .lista
                         .titulo Finalidade:
@@ -20,7 +21,7 @@ body
                         .linha
                             .tipo Venda
                             .dado
-                                input(type="radio" name="finalidade" value="venda" required)
+                                input(type="radio" name="finalidade" value="venda" required checked)
                         .linha
                             .tipo Venda/locação
                             .dado 
@@ -30,15 +31,15 @@ body
                         .atributo-titulo
                             .titulo Categoria:
                             select(name="categoria" required)
-                                option(value="" selected) Selecione uma opção
-                                option(value="residencial") Residencial
+                                option(value="") Selecione uma opção
+                                option(value="residencial" selected) Residencial
                                 option(value="comercial") Comercial
                                 option(value="industrial") Industrial
                         .atributo-titulo
                             .titulo Subcategoria:
                             select(name="subcategoria" required)
-                                option(value="" selected) Selecione uma opção
-                                option(value="apartamento") Apartamento
+                                option(value="") Selecione uma opção
+                                option(value="apartamento" selected) Apartamento
                                 option(value="loft") Loft
                                 option(value="chacara") Chácara
                                 option(value="sitio") Sítio
@@ -53,46 +54,46 @@ body
                         .atributo-titulo
                             .titulo Condomínio:
                             select(name="condominio" required)
-                                option(value="" selected) Selecione uma opção
-                                option(value="nao") Não
+                                option(value="") Selecione uma opção
+                                option(value="nao" selected) Não
                                 option(value="sim") Sim
 
                         .atributo-titulo
                             .titulo Andar:
-                            input#andar(type="number" name="andar" min="0" max="100" value="0" autocomplete="off")
+                            input#andar(type="number" name="andar" min="1" max="100" value="1" autocomplete="off")
 
                 .zona
                     .titulo Localização:
                     .atributos
                         .atributo-simples
-                            input(type="text" name="cidade" placeholder="Cidade" required autocomplete="off")
+                            input(type="text" name="cidade" placeholder="Cidade" required autocomplete="off" value="São José dos Pinhais")
                         .atributo-simples
-                            input(type="text" name="bairro" placeholder="Bairro" required autocomplete="off")
+                            input(type="text" name="bairro" placeholder="Bairro" required autocomplete="off" value="Centro")
                         .atributo-simples
-                            input(type="text" name="rua" placeholder="Rua" required autocomplete="off")
+                            input(type="text" name="logradouro" placeholder="Logradouro" required autocomplete="off" value="Rua dos Alfeneiros")
                         .atributo-duplo
-                            input.numero(type="tel" name="numero" placeholder="Número" required autocomplete="off")
+                            input.numero(type="tel" name="numero" placeholder="Número" required autocomplete="off" value="4")
                             input(type="text" name="complemento" placeholder="Complemento" autocomplete="off")
                         .atributo-simples
-                            input.cep(type="tel" name="cep" placeholder="CEP" required autocomplete="off")
+                            input.cep(type="tel" name="cep" placeholder="CEP" required autocomplete="off" value="84.000-11")
 
                 .zona
                     .titulo Valores:
                     .atributos
                         .atributo-titulo
                             .titulo Preço de venda (com comissão)
-                            input.preco-venda(type="tel" name="preco-venda" placeholder="Preço de venda" required autocomplete="off")
+                            input.preco-venda(type="tel" name="valorvenda" placeholder="Preço de venda" required autocomplete="off" value="440.000,00")
                         .atributo-titulo
                             .titulo Preço de locação
-                            input.preco-locacao(type="tel" name="preco-locacao" placeholder="Preço de locação" required autocomplete="off")
+                            input.preco-locacao(type="tel" name="valorlocacao" placeholder="Preço de locação" required autocomplete="off" value="1.270,00")
                         .atributo-titulo
                             .titulo Valor de condomínio
-                            input.valor-condominio(type="tel" name="valor-condominio" placeholder="Valor mensal de condomínio" required autocomplete="off")
+                            input.valor-condominio(type="tel" name="valorcondominio" placeholder="Valor mensal de condomínio" required autocomplete="off" value="100,00")
                         .atributo-titulo
                             .titulo Condição de pagamento do IPTU
-                            select(name="condicao-pagamento-iptu" required)
-                                option(value="" selected) Selecione uma opção
-                                option(value="mensal") Mensal
+                            select(name="condicaoiptu" required)
+                                option(value="") Selecione uma opção
+                                option(value="mensal" selected) Mensal
                                 option(value="anual") Anual
 
                 .zona
@@ -100,78 +101,113 @@ body
                     .atributos
                         .atributo-duplo
                             .titulo Cartório
-                            input(type="text" name="cartorio-cidade" placeholder="Selecione a cidade" required autocomplete="off")
-                            input(type="text" name="cartorio-numero" placeholder="N. do cartório" required autocomplete="off")
+                            input(type="text" name="cartoriocidade" placeholder="Selecione a cidade" required autocomplete="off" value="Pinhais")
+                            input(type="text" name="cartorionumero" placeholder="N. do cartório" required autocomplete="off" value="9182")
                         .listacheia
                             .linha
                                 .tipo IPTU
                                 .dado
-                                    input(type="radio" name="documento-cartorio" value="iptu" required)
+                                    input(type="radio" name="documentocartorio" value="iptu" required checked)
                             .linha
                                 .tipo Outros
                                 .dado
-                                    input(type="radio" name="documento-cartorio" value="outros" required)
+                                    input(type="radio" name="documentocartorio" value="outros" required)
                         .atributo-titulo
                             .titulo Número da matrícula
-                            input(type="text" name="documento-numero-matricula" placeholder="Insira o número da matrícula" required autocomplete="off")
+                            input(type="text" name="matricula" placeholder="Insira o número da matrícula" required autocomplete="off" value="1987391")
                         .atributo-titulo
                             .titulo Número do IPTU
-                            input(type="text" name="documento-numero-iptu" placeholder="Insira o número do IPTU" required autocomplete="off")
+                            input(type="text" name="iptunumero" placeholder="Insira o número do IPTU" required autocomplete="off" value="2398579143-102")
 
                 .zona
                     .titulo Medidas:
                     .atributos
                         .atributo-titulo
                             .titulo Área total
-                            input.area-total(type="tel" name="area-total" placeholder="em m²" required autocomplete="off")
+                            input.area-total(type="tel" name="medidatotal" placeholder="em m²" required autocomplete="off" value="100")
+                        .atributo-titulo
+                            .titulo Área construída
+                            input.medida-construida(type="tel" name="medidaconstruida" placeholder="em metros" required autocomplete="off" value="10")
                         .atributo-titulo
                             .titulo Área útil
-                            input.area-util(type="tel" name="area-util" placeholder="em m²" required autocomplete="off")
+                            input.area-util(type="tel" name="medidautil" placeholder="em m²" required autocomplete="off" value="75")
                         .atributo-titulo
-                            .titulo Medida frente
-                            input.medida-frente(type="tel" name="medida-frente" placeholder="em metros" required autocomplete="off")
+                            .titulo Medida da frente
+                            input.medida-frente(type="tel" name="medidafrente" placeholder="em metros" required autocomplete="off" value="10")
                         .atributo-titulo
                             .titulo Medida lateral
-                            input.medida-lateral(type="tel" name="medida-lateral" placeholder="em metros" required autocomplete="off")
+                            input.medida-lateral(type="tel" name="medidalateral" placeholder="em metros" required autocomplete="off" value="30")
                         .atributo-titulo
-                            .titulo Medida fundos
-                            input.medida-fundos(type="tel" name="medida-fundos" placeholder="em metros" required autocomplete="off")
+                            .titulo Medida dos fundos
+                            input.medida-fundos(type="tel" name="medidafundos" placeholder="em metros" required autocomplete="off" value="10")
+                        .atributo-titulo
+                            .titulo Topografia do terreno
+                            select(name="medidatopografia" required)
+                                option(value="") Selecione uma opção
+                                option(value="plano" selected) Plano
+                                option(value="aclive") Aclive
+                                option(value="declive") Declive
 
                 .zona
                     .titulo Características:
                     .atributos
                         .atributo-titulo
                             .titulo Dormitórios
-                            input.dormitorios(type="tel" name="dormitorios" placeholder="Dormitórios" required autocomplete="off")
+                            input.dormitorios(type="tel" name="dormitorios" placeholder="Dormitórios" required autocomplete="off" value="5") 
                         .atributo-titulo
                             .titulo Banheiros
-                            input.banheiros(type="tel" name="banheiros" placeholder="Banheiros" required autocomplete="off")
+                            input.banheiros(type="tel" name="banheiros" placeholder="Banheiros" required autocomplete="off" value="1")
                         .atributo-titulo
                             .titulo Suítes
-                            input.suites(type="tel" name="suites" placeholder="Suítes" required autocomplete="off")
+                            input.suites(type="tel" name="suites" placeholder="Suítes" required autocomplete="off" value="1")
                         .atributo-titulo
                             .titulo Vagas na garagem
-                            //- input.garagem(type="tel" name="garagem" placeholder="Vagas na garagem" required autocomplete="off")
-                            input.garagem(type="number" name="garagem" min="0" max="100" value="1" placeholder="Vagas na garagem" autocomplete="off")
+                            input.garagem(type="number" name="vagas" min="0" max="100" value="1" placeholder="Vagas na garagem" autocomplete="off")
 
                         .lista
                             .titulo Vaga
                             .linha
                                 .tipo Fixa
                                 .dado
-                                    input(type="radio" name="tipovagas" value="fixa" required)
+                                    input(type="radio" name="tipogaragem" value="fixa" required checked)
                             .linha
                                 .tipo Livre
                                 .dado
-                                    input(type="radio" name="tipovagas" value="livre" required)
-                            
+                                    input(type="radio" name="tipogaragem" value="livre" required)
+
                 .zona
+                    .atributos
+                        .atributo-titulo
+                            .titulo Churrasqueira
+                            select(name="churrasqueira" required)
+                                option(value="") Selecione uma opção
+                                option(value="sim" selected) Sim
+                                option(value="nao") Não
+                        .atributo-titulo
+                            .titulo Sala de estar
+                            select(name="salaestar" required)
+                                option(value="") Selecione uma opção
+                                option(value="sim") Sim
+                                option(value="nao" selected) Não
+                        .atributo-titulo
+                            .titulo Piscina
+                            select(name="piscina" required)
+                                option(value="") Selecione uma opção
+                                option(value="sim" selected) Sim
+                                option(value="nao") Não
+                        .atributo-titulo
+                            .titulo Escritório
+                            select(name="escritorio" required)
+                                option(value="") Selecione uma opção
+                                option(value="sim" selected) Sim
+                                option(value="nao") Não
+
                     .titulo Descrição:
                         .atributos
                             .atributo
-                                textarea(name="descricao")
+                                textarea(name="descricao") Opa.
 
-                input(type="submit" value="enviar")
+                input(type="submit" value="Cadastrar")
 
 script(src="/jquery-3.3.1.js")
 script(src="/jquery.mask.js")
@@ -187,6 +223,7 @@ script.
     $('.area-util').mask('0#')
     $('.medida-frente').mask('0#')
     $('.medida-lateral').mask('0#')
+    $('.medida-construida').mask('0#')
     $('.medida-fundos').mask('0#')
     $('.dormitorios').mask('0#')
     $('.banheiros').mask('0#')

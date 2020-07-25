@@ -1,0 +1,77 @@
+include ./estrutura.preferencias.pug
+body
+    include ./estrutura.menulateral.pug
+    #corpoconteudo
+        .cabecalho
+            a(href="./pagina-inicial" class="logo")
+                img(src=`${configuracoes.servidor.logo}`)
+            form(action="/imoveis/api/buscar" method="post")
+                input#termo(type="search" name="termo" placeholder="Buscar por imóveis. Ex: Cidade, condomínio, número de referência..." autocomplete="off" required)
+
+        .imovel-cadastro
+            form(action="/imoveis/api/edicao/chaves/principal" method="post")
+                input(type="hidden" name="identificador" value="abc1024")
+                .titulo Local das chaves
+
+                //- isso ta muito esquisito, serio.
+
+                .titulo Dias
+                    //- como faz isso? quem fez isso eh muito inteligente... ou nao.
+
+                .dias
+                    input(type="checkbox" id="cb-domingo" name="domingo" value="true")
+                    input(type="checkbox" id="cb-segunda" name="segunda" value="true" checked)
+                    input(type="checkbox" id="cb-terca" name="terca" value="true" checked)
+                    input(type="checkbox" id="cb-quarta" name="quarta" value="true" checked)
+                    input(type="checkbox" id="cb-quinta" name="quinta" value="true" checked)
+                    input(type="checkbox" id="cb-sexta" name="sexta" value="true" checked)
+                    input(type="checkbox" id="cb-sabado" name="sabado" value="true")
+
+                .horas
+                    .grupamento
+                        .subtitulo De
+                        select(name="hora-inicio")
+                            option(value="06") 06:00
+                            option(value="07") 07:00
+                            option(value="08" selected) 08:00
+                            option(value="09") 09:00
+                            option(value="10") 10:00
+                            option(value="11") 11:00
+                            option(value="12") 12:00
+                            option(value="13") 13:00
+                            option(value="14") 14:00
+                            option(value="15") 15:00
+                            option(value="16") 16:00
+                            option(value="17") 17:00
+                            option(value="18") 18:00
+                            option(value="19") 19:00
+                            option(value="20") 20:00
+                            option(value="21") 21:00
+                            option(value="22") 22:00
+
+                    .grupamento
+                        .subtitulo Até
+                        select(name="hora-fim")
+                            option(value="06") 06:00
+                            option(value="07") 07:00
+                            option(value="08") 08:00
+                            option(value="09") 09:00
+                            option(value="10") 10:00
+                            option(value="11") 11:00
+                            option(value="12") 12:00
+                            option(value="13") 13:00
+                            option(value="14") 14:00
+                            option(value="15") 15:00
+                            option(value="16") 16:00
+                            option(value="17") 17:00
+                            option(value="18") 18:00
+                            option(value="19") 19:00
+                            option(value="20" selected) 20:00
+                            option(value="21") 21:00
+                            option(value="22") 22:00
+
+
+                input(type="submit" value="enviar")
+
+script(src="/jquery-3.3.1.js")
+script(src="/jquery.mask.js")
