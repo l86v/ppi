@@ -176,13 +176,14 @@ module.exports.api_visualizar_via_agencia = (req, res) => {
 
 module.exports.api_visualizar_via_simples = (req, res) => {
     let imovel = req.query.imovel
-    let proprietario = req.query.proprietario
 
-    Imovel.findOne({ identificador: imovel, proprietario: proprietario }).lean().exec((erros, dados) => {
+    Imovel.findById(imovel).lean().exec((erros, dados) => {
         if (dados != undefined) {
             dados.foto = dados.fotos[0]
             dados.valorvendaformatado = configuracoes.conversao_valores(dados.valorvenda, "dinheiro")
         }
+
+        console.log(imovel, dados)
 
         res.json({
             erro: (erros != null && erros != undefined) ? true : false,

@@ -23,6 +23,7 @@ let favorito = require("./routes/favorito.routes")
 let visualizacao = require("./routes/visualizacao.routes")
 let visita = require("./routes/visita.routes")
 let chaves = require("./routes/chaves.routes")
+let proposta = require("./routes/proposta.routes")
 
 let conexao = `mongodb://${configuracoes.db.usuario}:${configuracoes.db.senha}@${configuracoes.db.dominio}.mlab.com:${configuracoes.db.porta}/${configuracoes.db.nomedb}`
 let mongoDB = process.env.MONGODB_URI || conexao
@@ -54,6 +55,7 @@ servidor.use(["/favoritos", "/favorito"], favorito)
 servidor.use(["/visualizacoes", "/visualizacao"], visualizacao)
 servidor.use(["/visitas", "/visita"], visita)
 servidor.use(["/chaves", "/chave"], chaves)
+servidor.use(["/propostas", "/proposta"], proposta)
 
 http.createServer(servidor).listen(configuracoes.servidor.porta)
 console.log(chalk.cyan(`Servidor ligado na porta ${configuracoes.servidor.porta}!`))

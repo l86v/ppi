@@ -72,8 +72,7 @@ module.exports.api_adicionar = (req, res) => {
 
     console.log({ corpo, novolocal })
 
-    Chaves.findOne({ cep: novolocal.cep, proprietario: novolocal.proprietario }).lean().exec((erros, existe) => {
-        // aqui so checando se o local das chaves ja existe.
+    Chaves.findOne({ cep: novolocal.cep, proprietario: novolocal.proprietario }).lean().exec((erros, existe) => { // aqui so checando se o local das chaves ja existe.
         if (erros) {
             res.json({
                 erro: true,

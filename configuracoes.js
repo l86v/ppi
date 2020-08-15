@@ -51,7 +51,7 @@ module.exports.padroes = {
     pasta: "uploads",
     usuario: {
         nome: "Nautilus",
-        foto: `${this.servidor.arquivos}/uploads/nautilus.jpg` 
+        foto: `${this.servidor.arquivos}/uploads/nautilus.jpg`
     },
     imovel: {
         tipos: [
@@ -110,7 +110,13 @@ module.exports.mensagens = (codigo) => {
         case "Ca10": mensagem = "O cadastro do local de chaves foi realizado."; break;
         case "Ca11": mensagem = "O local de chaves já foi cadastrado anteriormente."; break;
         case "Ca12": mensagem = "O cadastro do local de chaves não pôde ser realizado."; break;
-
+        case "Ca13": mensagem = "O cadastro da proposta foi realizado."; break;
+        case "Ca14": mensagem = "Não foi possível realizar o cadastro da proposta."; break;
+        case "Ca15": mensagem = "A proposta foi excluída com sucesso."; break;
+        case "Ca16": mensagem = "A proposta não pôde ser excluída."; break;
+        case "Ca17": mensagem = "A proposta foi atualizada com sucesso."; break;
+        case "Ca18": mensagem = "A proposta não pôde ser atualizada."; break;
+        case "Ca19": mensagem = "Nenhuma imobiliária/agência foi selecionada para a proposta."; break;
 
         // edição
         case "Ed0": mensagem = "Não foi possível editar as informações."; break;

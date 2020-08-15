@@ -39,8 +39,6 @@ favoritos
     ok  verificar
     ok  acao adicionar/remover
     ok  agencia
-propostas
-    ---
 visualizacao
     ok  total
     ok  marcar visualizacao

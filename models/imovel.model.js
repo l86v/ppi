@@ -50,7 +50,6 @@ let ImovelSchema = new mongoose.Schema({
     escritorio: { type: Boolean, default: false },
 
     descricao: { type: String }
-
 })
 
 let Imovel = mongoose.model("Imovel", ImovelSchema)
